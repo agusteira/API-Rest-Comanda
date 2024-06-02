@@ -6,16 +6,15 @@ include "PersonalGastronomico.php";
 
 class Socio extends User {
 
-    public function __construct ($id, $date, $active, $cantOperaciones = 0){
-        parent::__construct($id, $date, $active, $cantOperaciones);
+    public function __construct ($id, $date, $estado, $cantOperaciones = 0){
+        parent::__construct($id, $date, $estado, $cantOperaciones);
     }
 
     public static function crearSocio(){
         $id = 0;//Obtener ultima id del SQL
         $date = date("d-m-Y H:i:s");
-        $active = true;
-        
-        $user = new Socio($id, $date, $active);
+        $estado = true;
+        $user = new Socio($id, $date, $estado);
         return $user;
     }
 
@@ -38,8 +37,6 @@ class Socio extends User {
                 break;
         }
     }
-
-    
 
     public function suspenderUsuario($IDuser){
         /*

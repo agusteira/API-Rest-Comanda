@@ -19,14 +19,14 @@ class Mozo extends User implements IEmpleados{
     }
     
     public function crearPedido($nombreCliente, $idMesa, $productos){
-        //Crea el pedido con los datos
+        $pedido = new Pedido($nombreCliente, $idMesa, $this->_id, $productos);
     }
 
     public function modificarEstadoMesa($idMesa){
         //Modifica el estado de la mesa
     }
 
-    public function relacionFoto($foto, $idPedido){
+    public function relacionarFoto($foto, $idPedido){
         //Relaciona la foto con el pedido
     }
 

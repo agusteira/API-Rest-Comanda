@@ -5,13 +5,13 @@ class User {
     public $_id;
     public $_date;
     public $_cantOperaciones;
-    public $_active;
+    public $_estado;
 
-    public function __construct ($id, $date, $active ,$cantOperaciones = 0){
+    public function __construct ($id, $date, $estado ,$cantOperaciones = 0){
         $this->_id = $id;
         $this->_date = $date;
         $this->_cantOperaciones = $cantOperaciones;
-        $this->_active = $active;
+        $this->_estado = $estado;
     }
 
     public function cambiarEstadoPedido($estado, $idPedido){
