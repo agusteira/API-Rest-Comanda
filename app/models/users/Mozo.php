@@ -5,16 +5,15 @@ require_once "././interfaces/IEmpleados.php";
 
 class Mozo extends User implements IEmpleados{
 
-    public function __construct ($id, $date, $active, $cantOperaciones = 0){
-        parent::__construct($id, $date, $active, $cantOperaciones);
+    public function __construct ($date, $estado, $tipo, $cantOperaciones = 0){
+        parent::__construct($date, $estado, $tipo, $cantOperaciones);
     }
     
     public static function crearEmpleado($tipo = null){
-        $id = 0;//Obtener ultima id del SQL
-        $date = date("d-m-Y H:i:s");
-        $active = true;
+        $date = date("Y-m-d H:i:s");
+        $estado = "activo";
         
-        $user = new Mozo($id, $date, $active);
+        $user = new Mozo($date, $estado, "mozo");
         return $user;
     }
     

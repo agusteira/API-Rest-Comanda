@@ -1,24 +1,21 @@
 <?php
-
-include "Mozo.php";
-include "PersonalGastronomico.php";
-
+include_once "User.php";
+include_once "Mozo.php";
 
 class Socio extends User {
 
-    public function __construct ($id, $date, $estado, $cantOperaciones = 0){
-        parent::__construct($id, $date, $estado, $cantOperaciones);
+    public function __construct ($date, $estado, $tipo ,$cantOperaciones = 0){
+        parent::__construct($date, $estado, $tipo ,$cantOperaciones);
     }
 
     public static function crearSocio(){
-        $id = 0;//Obtener ultima id del SQL
-        $date = date("d-m-Y H:i:s");
-        $estado = true;
-        $user = new Socio($id, $date, $estado);
+        $date = date("Y-m-d H:i:s");
+        $estado = "activo";
+        $user = new Socio($date, $estado, "socio");
         return $user;
     }
 
-    public function crearUsuario($tipo){
+    public static function crearUsuario($tipo){
         switch ($tipo){
             case "socio":
                 $user = Socio::CrearSocio();
@@ -36,6 +33,9 @@ class Socio extends User {
                 $user = PersonalGastronomico::CrearEmpleado($tipo);
                 break;
         }
+        $datos = UsersADO::obtenerInstancia();
+        $data = $datos->altaUsuario($user);
+        return $data;
     }
 
     public function suspenderUsuario($IDuser){
