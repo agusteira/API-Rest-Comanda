@@ -47,4 +47,20 @@ class UsersADO extends AccesoDatos
         }
     }
 
+    public function traerTodosLosUsuarios(){
+        //consulta
+        $sql = "SELECT id, tipo, fechaEntrada, cantOperaciones, estado FROM User";
+        //prepara la consulta
+        $stmt = $this->objetoPDO->prepare($sql);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
 }

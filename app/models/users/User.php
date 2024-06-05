@@ -28,6 +28,12 @@ class User {
         return $retorno;
     }
 
+    public static function traerTodosLosUsuarios(){
+        $datos = UsersADO::obtenerInstancia();
+        $data = $datos->traerTodosLosUsuarios();
+        return $data;
+    }
+
     public function cambiarEstadoPedido($estado, $idPedido){
         /* 
             cambiar de estado el pedido

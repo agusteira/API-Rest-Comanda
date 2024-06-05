@@ -1,6 +1,7 @@
 <?php
-include_once "User.php";
+//include_once "User.php";
 include_once "Mozo.php";
+include_once "PersonalGastronomico.php";
 
 class Socio extends User {
 
@@ -47,6 +48,10 @@ class Socio extends User {
 
     public function borrarUsuario($IDuser){
         /* Borra el usuario */
+    }
+
+    public function verUsuarios(){
+        
     }
 
     public function verMesas(){

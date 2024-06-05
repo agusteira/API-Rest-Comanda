@@ -16,13 +16,16 @@ $app->post('/altaUsuario', function (Request $request, Response $response, array
     return $response;
 });
 
-$app->get('/', function ($request, Response $response, array $args) {
-    
-    $response->getBody()->write("hola");
 
+$app->post('/altaProducto', function (Request $request, Response $response, array $args) {
+    ProductoController::AltaProducto($request, $response, $args);
     return $response;
+});
 
-    
+
+$app->get('/ListarUsuario', function ($request, Response $response, array $args) {
+    UserController::ListaUsuarios($request, $response, $args);
+    return $response;    
 });
 
 

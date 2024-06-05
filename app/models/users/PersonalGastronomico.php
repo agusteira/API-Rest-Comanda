@@ -1,10 +1,8 @@
 <?php
 
-include "user.php";
+include_once "user.php";
 
 class PersonalGastronomico extends User implements IEmpleados{
-
-    public $_productosPendientes = [];
     public $_tipo;
 
 
@@ -16,7 +14,7 @@ class PersonalGastronomico extends User implements IEmpleados{
         $date = date("Y-m-d H:i:s");
         $estado = "activo";
         
-        $user = new PersonalGastronomico($date, $estado, "mozo");
+        $user = new PersonalGastronomico($date, $estado, $tipo);
         return $user;
     }
 
