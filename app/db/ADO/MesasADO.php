@@ -4,6 +4,7 @@ require_once "AccesoDatos.php";
 
 class MesasADO extends AccesoDatos
 {
+    protected static $objAccesoDatos;
     private function __construct()
     {
         parent::__construct();

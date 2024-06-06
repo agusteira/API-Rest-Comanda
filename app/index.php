@@ -5,6 +5,8 @@ require_once '../vendor/autoload.php';
 require_once "controllers/UserController.php";
 require_once "controllers/ProductoController.php";
 require_once "controllers/MesaController.php";
+require_once "controllers/PedidoController.php";
+
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -30,6 +32,11 @@ $app->post('/altaMesa', function (Request $request, Response $response, array $a
     return $response;
 });
 
+$app->post('/altaPedido', function (Request $request, Response $response, array $args) {
+    PedidoController::AltaPedido($request, $response, $args);
+    return $response;
+});
+
 
 
 $app->get('/ListarUsuario', function ($request, Response $response, array $args) {
@@ -44,6 +51,12 @@ $app->get('/ListarProductos', function ($request, Response $response, array $arg
 
 $app->get('/ListarMesas', function ($request, Response $response, array $args) {
     MesaController::ListaMesas($request, $response, $args);
+    return $response;    
+});
+
+
+$app->get('/ListarPedidos', function ($request, Response $response, array $args) {
+    PedidoController::ListaPedidos($request, $response, $args);
     return $response;    
 });
 

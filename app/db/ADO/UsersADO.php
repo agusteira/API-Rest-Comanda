@@ -4,6 +4,7 @@ require_once "AccesoDatos.php";
 
 class UsersADO extends AccesoDatos
 {
+    protected static $objAccesoDatos; //Cada hija de acceso datos DEBE tener su propio ObjADO porque si no se pueden mezclas y provocar errores
     private function __construct()
     {
         parent::__construct();

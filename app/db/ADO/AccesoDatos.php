@@ -1,7 +1,6 @@
 <?php
 class AccesoDatos
 {
-    protected static $objAccesoDatos;
     protected $objetoPDO;
 
     protected function __construct()
@@ -17,8 +16,6 @@ class AccesoDatos
             die();
         }
     }
-
-    
 
     public function prepararConsulta($sql)
     {

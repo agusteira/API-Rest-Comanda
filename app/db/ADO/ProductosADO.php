@@ -4,6 +4,7 @@ require_once "AccesoDatos.php";
 
 class ProductosADO extends AccesoDatos
 {
+    protected static $objAccesoDatos; //Cada hija de acceso datos DEBE tener su propio ObjADO porque si no se pueden mezclas y provocar errores
     private function __construct()
     {
         parent::__construct();
@@ -55,5 +56,25 @@ class ProductosADO extends AccesoDatos
             return false;
         }
     }
+
+    public function obtenerImportePorNombre($nombre){
+        //consulta
+        $sql = "SELECT nombre, importe FROM productos WHERE nombre = :nombre";
+        //prepara la consulta
+        $stmt = $this->objetoPDO->prepare($sql);
+
+        $stmt->bindParam(':nombre', $nombre);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $importe = $result["importe"];
+            return $importe;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
 
 }

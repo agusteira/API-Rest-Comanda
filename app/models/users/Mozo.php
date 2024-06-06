@@ -17,9 +17,12 @@ class Mozo extends User implements IEmpleados{
         return $user;
     }
     
+    /*
     public function crearPedido($nombreCliente, $idMesa, $productos){
         $pedido = new Pedido($nombreCliente, $idMesa, $this->_id, $productos);
     }
+
+    */
 
     public function modificarEstadoMesa($idMesa){
         //Modifica el estado de la mesa
