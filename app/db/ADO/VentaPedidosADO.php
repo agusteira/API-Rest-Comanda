@@ -2,7 +2,7 @@
 
 require_once "AccesoDatos.php"; 
 
-class ProductosADO extends AccesoDatos
+class VentasPedidosADO extends AccesoDatos
 {
     protected static $objAccesoDatos; //Cada hija de acceso datos DEBE tener su propio ObjADO porque si no se pueden mezclas y provocar errores
     private function __construct()
@@ -13,23 +13,23 @@ class ProductosADO extends AccesoDatos
     public static function obtenerInstancia()
     {
         if (!isset(self::$objAccesoDatos)) {
-            self::$objAccesoDatos = new ProductosADO();
+            self::$objAccesoDatos = new VentasPedidosADO();
         }
         return self::$objAccesoDatos;
     }
 
-    public function altaProducto($producto)
+    public function altaVenta($pedido, $producto)
     {
-        $sql = "INSERT INTO `productos` (`tipo`, `nombre`, `importe`, `tiempoEstimado`) 
-            VALUES (:tipo, :nombre, :importe, :tiempoEstimado)";
+        $sql = "INSERT INTO `ventas` (`idPedido`, `idProducto`, `cantidad`, `tipoProducto`) 
+            VALUES (:idPedido, :idProducto, :cantidad, :tipoproducto)";
 
         $stmt = $this->objetoPDO->prepare($sql);
 
         // Vincular los valores a los parámetros
-        $stmt->bindParam(':tipo', $producto->_tipo);
-        $stmt->bindParam(':nombre', $producto->_nombre);
-        $stmt->bindParam(':importe',  $producto->_importe);
-        $stmt->bindParam(':tiempoEstimado',  $producto->_tiempoEstimado);
+        $stmt->bindParam(':idPedido', $pedido->_id);
+        $stmt->bindParam(':idProducto', $producto["id"]);
+        $stmt->bindParam(':cantidad',  $producto["importe"]);
+        $stmt->bindParam(':tipoproducto',  $producto["tipo"]);
 
         // Ejecutar la consulta
         try {
@@ -40,7 +40,7 @@ class ProductosADO extends AccesoDatos
         }
         return $retorno;
     }
-
+    /*
     public function traerTodosLosProductos(){
         //consulta
         $sql = "SELECT id, tipo, nombre, importe, tiempoEstimado FROM productos";
@@ -75,24 +75,6 @@ class ProductosADO extends AccesoDatos
             return false;
         }
     }
-
-    public function obtenerProductoPorNombre($nombre){
-        //consulta
-        $sql = "SELECT * FROM productos WHERE nombre = :nombre";
-        //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
-
-        $stmt->bindParam(':nombre', $nombre);
-        try {
-            //ejecuta la consulta
-            $stmt->execute();
-            //obtiene los datos de la consulta
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
     
-
+    */
 }

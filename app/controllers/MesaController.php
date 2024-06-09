@@ -6,7 +6,6 @@ class MesaController{
 
     public static function AltaMesa($request, $response, $args){
         //Aca hay que modificar el tema de la comprobacion del usuario creador y el tipo de producto ingresado, y hacerlo mediante Middleware
-        $parametros = $request->getParsedBody();
 
         if(Mesas::CrearMesa()){
             $payload = json_encode(array("mensaje" => "Mesa creado con exito"));

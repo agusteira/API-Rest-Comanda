@@ -14,7 +14,6 @@ class Productos{
         $this->_tiempoEstimado = $tiempoEstimado;
         $this->_nombre = $nombre;
     }
-
     public static function CrearProducto($tipo, $importe, $nombre,$tiempoEstimado = null){
         $producto = new Productos($tipo, $importe,$nombre, $tiempoEstimado);
 
@@ -22,7 +21,6 @@ class Productos{
         $data = $datos->altaProducto($producto);
         return $data;
     }
-
     public static function traerTodo(){
         $datos = ProductosADO::obtenerInstancia();
         $data = $datos->traerTodosLosProductos();

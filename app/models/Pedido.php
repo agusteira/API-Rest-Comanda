@@ -1,8 +1,11 @@
 <?php
 
 include_once "././db/ADO/PedidosADO.php";
+include_once "././db/ADO/ProductosADO.php";
+include_once "././db/ADO/VentaPedidosADO.php";
 
 class Pedido{
+    public $_id;
     public $_nombreCliente;
     public $_idMesa;
     public $_idMozo;
@@ -22,10 +25,8 @@ class Pedido{
         $this->_estado = $estado;
         $this->_tiempoEsperaEstimado = $tiempoDeEsperaEstimado; 
         $this->_tiempoDemora = $tiempoDemora; 
-        
         $this->_date = $momentoEntrada;
     }
-
     public static function CrearPedido($nombreCliente,$IDMesa,$IDMozo,$productosString){
         $estado = "pendiente";
         $tiempoDeEsperaEstimado = 0; //Esto lo tiene que modificar el personal de gastronomia
@@ -34,13 +35,26 @@ class Pedido{
         $pedido = new Pedido($nombreCliente,$IDMesa,$IDMozo, $estado, $tiempoDeEsperaEstimado, $tiempoDemora, $date);
 
         $productos = explode(",", $productosString);
-
         $pedido->_importeFinal = $pedido->calcularImporteFinal($productos);
 
-        $datos = PedidosADO::obtenerInstancia();
-        $data = $datos->altaPedido($pedido);
+        
 
-        return true;
+        $datosPedido = PedidosADO::obtenerInstancia();
+        $data = $datosPedido->altaPedido($pedido);
+
+        $pedido->asignarId();
+
+        $pedido->guardarVentaPorProducto($productos);
+
+        return $data;
+    }
+    public function guardarVentaPorProducto($productos){
+        $datosVentas = VentasPedidosADO::obtenerInstancia();
+        foreach ($productos as $productoNombre){
+            $datoProductos = ProductosADO::obtenerInstancia();
+            $producto = $datoProductos->obtenerProductoPorNombre($productoNombre);
+            $data = $datosVentas->altaVenta($this, $producto);
+        }
     }
     public function calcularImporteFinal($productos){
         $importe = 0;
@@ -53,7 +67,11 @@ class Pedido{
         //Se conecta a la base de datos de ventas
         return $importe;
     }
-
+    public function asignarId(){
+        $datosPedido = PedidosADO::obtenerInstancia();
+        $data = $datosPedido->obtenerUltimoId();
+        $this->_id = $data;
+    }
     public static function traerTodo(){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->traerTodosLosPedidos();

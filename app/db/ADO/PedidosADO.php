@@ -17,7 +17,6 @@ class PedidosADO extends AccesoDatos
         }
         return self::$objAccesoDatos;
     }
-
     public function altaPedido($pedido)
     {
         $sql = "INSERT INTO `pedidos` (`nombreCliente`, `idMesa`, `idMozo`, `estado`, `tiempoDeEsperaEstimado`, `tiempoDeDemora`, `importeFinal`, `horaEntrada`) 
@@ -43,7 +42,6 @@ class PedidosADO extends AccesoDatos
         }
         return $retorno;
     }
-
     public function traerTodosLosPedidos(){
         //consulta
         $sql = "SELECT * FROM pedidos";

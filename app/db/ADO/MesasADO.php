@@ -4,7 +4,7 @@ require_once "AccesoDatos.php";
 
 class MesasADO extends AccesoDatos
 {
-    protected static $objAccesoDatos;
+    protected static $objAccesoDatos; //Cada hija de acceso datos DEBE tener su propio ObjADO porque si no se pueden mezclas y provocar errores
     private function __construct()
     {
         parent::__construct();
@@ -20,13 +20,15 @@ class MesasADO extends AccesoDatos
 
     public function altaMesa($mesa)
     {
-        $sql = "INSERT INTO `mesas` (`estado`) 
-            VALUES (:estado)";
+        $sql = "INSERT INTO `mesas` (`id`, `estado`, `idPedidoActual`) 
+            VALUES (:id, :estado, :idPedidoActual)";
 
         $stmt = $this->objetoPDO->prepare($sql);
 
         // Vincular los valores a los parámetros
+        $stmt->bindParam(':id', $mesa->_id);
         $stmt->bindParam(':estado', $mesa->_estado);
+        $stmt->bindParam(':idPedidoActual', $mesa->_idPedidoActual);
 
 
         // Ejecutar la consulta
