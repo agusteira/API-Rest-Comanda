@@ -5,33 +5,33 @@ include_once "PersonalGastronomico.php";
 
 class Socio extends User {
 
-    public function __construct ($date, $estado, $tipo ,$cantOperaciones = 0){
-        parent::__construct($date, $estado, $tipo ,$cantOperaciones);
+    public function __construct ($date, $estado, $tipo , $nombre, $clave,$cantOperaciones = 0){
+        parent::__construct($date, $estado, $tipo, $nombre,$clave, $cantOperaciones);
     }
 
-    public static function crearSocio(){
+    public static function crearSocio($nombre, $clave){
         $date = date("Y-m-d H:i:s");
         $estado = "activo";
-        $user = new Socio($date, $estado, "socio");
+        $user = new Socio($date, $estado, "socio", $nombre, $clave);
         return $user;
     }
 
-    public static function crearUsuario($tipo){
+    public static function crearUsuario($tipo, $nombre, $clave){
         switch ($tipo){
             case "socio":
-                $user = Socio::CrearSocio();
+                $user = Socio::CrearSocio($nombre, $clave);
                 break;
             case "mozo":
-                $user = Mozo::CrearEmpleado();
+                $user = Mozo::CrearEmpleado($nombre, $clave);
                 break;
             case "cocinero":
-                $user = PersonalGastronomico::CrearEmpleado($tipo);
+                $user = PersonalGastronomico::CrearEmpleado( $nombre, $clave, $tipo);
                 break;
             case "cervezero":
-                $user = PersonalGastronomico::CrearEmpleado($tipo);
+                $user = PersonalGastronomico::CrearEmpleado($nombre, $clave, $tipo);
                 break;
             case "bartender":
-                $user = PersonalGastronomico::CrearEmpleado($tipo);
+                $user = PersonalGastronomico::CrearEmpleado($nombre, $clave, $tipo);
                 break;
         }
         $datos = UsersADO::obtenerInstancia();
@@ -40,14 +40,15 @@ class Socio extends User {
     }
 
     public function suspenderUsuario($IDuser){
-        /*
-            Cambia el atributo Active de un usuario de True a False
-            entrando su ID
-        */
+        $datos = UsersADO::obtenerInstancia();
+        $data = $datos->suspenderUsuario($IDuser);
+        return $data;
     }
 
     public function borrarUsuario($IDuser){
-        /* Borra el usuario */
+        $datos = UsersADO::obtenerInstancia();
+        $data = $datos->borrarUsuario($IDuser);
+        return $data;
     }
 
     public function verUsuarios(){
@@ -57,13 +58,11 @@ class Socio extends User {
     public function verMesas(){
         /*
         Lista todas las mesas y sus estados
-         */
+        */
     }
 
     public function cerrarMesa(){
-        /*
-        Cambia el estado de la mesa y el estado del pedido
-         */
+        
     }
 
 }

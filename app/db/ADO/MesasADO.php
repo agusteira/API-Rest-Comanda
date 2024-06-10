@@ -58,4 +58,33 @@ class MesasADO extends AccesoDatos
         }
     }
 
+    public function cambiarEstadoMesa($idMesa, $estado, $idPedido = 0){
+        //consulta
+        if ($estado != "cerrada"){
+            $sql = "UPDATE mesas SET estado = :estado WHERE idMesa = :idMesa";
+            $stmt = $this->objetoPDO->prepare($sql);
+        }else{
+            // si la mesa se cambia a cerrada, se le cambia el id del pedido actual, asi no entra en conflicto
+            $sql = "UPDATE mesas SET estado = :estado, idPedidoActual = :idPedidoActual WHERE idMesa = :idMesa";
+            $stmt = $this->objetoPDO->prepare($sql);
+            $stmt->bindParam(':idPedidoActual', $idPedido, PDO::PARAM_STR);
+        }
+        
+        $stmt->bindParam(':estado', $estado, PDO::PARAM_INT);
+        $stmt->bindParam(':idMesa', $idMesa, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene las filas afectadas
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
 }

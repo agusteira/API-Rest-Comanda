@@ -4,7 +4,7 @@ require_once "AccesoDatos.php";
 
 class PedidosADO extends AccesoDatos
 {
-    protected static $objAccesoDatos; //Cada hija de acceso datos DEBE tener su propio ObjADO porque si no se pueden mezclas y provocar errores
+    protected static $objAccesoDatos; //Cada hija de acceso datos DEBE tener su propio ObjADO porque si no se pueden mezclar y provocar errores
     private function __construct()
     {
         parent::__construct();
@@ -54,6 +54,46 @@ class PedidosADO extends AccesoDatos
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public function ModificarEstadoPorID($id, $estado){
+        //consulta
+        $sql = "UPDATE pedidos SET estado = :estado WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->objetoPDO->prepare($sql);
+
+        $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public function ObtenerEstadoPorID($id){
+        //consulta
+        $sql = "SELECT estado FROM pedidos WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->objetoPDO->prepare($sql);
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }catch (PDOException $e) {
             return false;
         }
     }

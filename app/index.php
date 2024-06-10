@@ -7,20 +7,21 @@ require_once "controllers/ProductoController.php";
 require_once "controllers/MesaController.php";
 require_once "controllers/PedidoController.php";
 
-
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
+use Slim\Routing\RouteCollectorProxy;
+
+
+
+
 
 $app = AppFactory::create();
-
-
 
 $app->post('/altaUsuario', function (Request $request, Response $response, array $args) {
     UserController::AltaUsuario($request, $response, $args);
     return $response;
 });
-
 
 $app->post('/altaProducto', function (Request $request, Response $response, array $args) {
     ProductoController::AltaProducto($request, $response, $args);

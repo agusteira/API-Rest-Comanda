@@ -18,6 +18,59 @@ class ProductosADO extends AccesoDatos
         return self::$objAccesoDatos;
     }
 
+    //SELECT
+    public function traerTodosLosProductos(){
+        //consulta
+        $sql = "SELECT id, tipo, nombre, importe, tiempoEstimado FROM productos";
+        //prepara la consulta
+        $stmt = $this->objetoPDO->prepare($sql);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public function obtenerImportePorNombre($nombre){
+        //consulta
+        $sql = "SELECT nombre, importe FROM productos WHERE nombre = :nombre";
+        //prepara la consulta
+        $stmt = $this->objetoPDO->prepare($sql);
+
+        $stmt->bindParam(':nombre', $nombre);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $importe = $result["importe"];
+            return $importe;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public function obtenerProductoPorNombre($nombre){
+        //consulta
+        $sql = "SELECT * FROM productos WHERE nombre = :nombre";
+        //prepara la consulta
+        $stmt = $this->objetoPDO->prepare($sql);
+
+        $stmt->bindParam(':nombre', $nombre);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    
+    //INSERT
     public function altaProducto($producto)
     {
         $sql = "INSERT INTO `productos` (`tipo`, `nombre`, `importe`, `tiempoEstimado`) 
@@ -39,59 +92,6 @@ class ProductosADO extends AccesoDatos
             $retorno = false;
         }
         return $retorno;
-    }
-
-    public function traerTodosLosProductos(){
-        //consulta
-        $sql = "SELECT id, tipo, nombre, importe, tiempoEstimado FROM productos";
-        //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
-        try {
-            //ejecuta la consulta
-            $stmt->execute();
-            //obtiene los datos de la consulta
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    public function obtenerImportePorNombre($nombre){
-        //consulta
-        $sql = "SELECT nombre, importe FROM productos WHERE nombre = :nombre";
-        //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
-
-        $stmt->bindParam(':nombre', $nombre);
-        try {
-            //ejecuta la consulta
-            $stmt->execute();
-            //obtiene los datos de la consulta
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $importe = $result["importe"];
-            return $importe;
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    public function obtenerProductoPorNombre($nombre){
-        //consulta
-        $sql = "SELECT * FROM productos WHERE nombre = :nombre";
-        //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
-
-        $stmt->bindParam(':nombre', $nombre);
-        try {
-            //ejecuta la consulta
-            $stmt->execute();
-            //obtiene los datos de la consulta
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            return false;
-        }
     }
     
 

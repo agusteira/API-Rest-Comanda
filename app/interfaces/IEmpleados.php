@@ -1,5 +1,5 @@
 <?php
 
 interface IEmpleados{
-    public static function crearEmpleado($tipo);
+    public static function crearEmpleado($nombre, $clave, $tipo);
 }

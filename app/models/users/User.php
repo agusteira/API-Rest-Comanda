@@ -1,6 +1,8 @@
 <?php
 
 include_once "././db/ADO/UsersADO.php";
+include_once "././db/ADO/PedidosADO.php";
+
 class User {
     public $_id;
     public $_date;
@@ -35,9 +37,9 @@ class User {
     }
 
     public function cambiarEstadoPedido($estado, $idPedido){
-        /* 
-            cambiar de estado el pedido
-        */
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->ModificarEstadoPorID($idPedido, $estado);
+        return $data;
     }
 
 }
