@@ -10,7 +10,7 @@ class User {
     public $_estado;
     public $_tipo;
 
-    public function __construct ($date, $estado ,$tipo, $cantOperaciones = 0){
+    public function __construct ($date, $estado ,$tipo,$nombre, $clave,$cantOperaciones = 0){
         $this->_date = $date;
         $this->_cantOperaciones = $cantOperaciones;
         $this->_estado = $estado;

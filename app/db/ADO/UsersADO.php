@@ -21,7 +21,7 @@ class UsersADO extends AccesoDatos
     //SELECT
     public function retornarTipoSegunID($IDuser)
     {
-        $stmt = $this->objetoPDO->prepare("SELECT tipo FROM user WHERE ID = ?");
+        $stmt = $this->prepararConsulta("SELECT tipo FROM user WHERE ID = ?");
         $stmt->bindParam(1, $IDuser, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,7 +30,7 @@ class UsersADO extends AccesoDatos
         //consulta
         $sql = "SELECT id, tipo, fechaEntrada, cantOperaciones, estado FROM User";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
         try {
             //ejecuta la consulta
             $stmt->execute();
@@ -48,7 +48,7 @@ class UsersADO extends AccesoDatos
         $sql = "INSERT INTO `user` (`tipo`, `fechaEntrada`, `cantOperaciones`, `estado`) 
             VALUES (:tipo, :fechaEntrada, :cantOperaciones, :estado)";
 
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         // Vincular los valores a los parámetros
         $stmt->bindParam(':tipo', $usuario->_tipo);
@@ -70,7 +70,7 @@ class UsersADO extends AccesoDatos
         //consulta
         $sql = "UPDATE user SET estado = :estado WHERE id = :id";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':id', $IDuser, PDO::PARAM_INT);
@@ -92,7 +92,7 @@ class UsersADO extends AccesoDatos
         //consulta
         $sql = "UPDATE user SET estado = :estado WHERE id = :id";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':id', $IDuser, PDO::PARAM_INT);

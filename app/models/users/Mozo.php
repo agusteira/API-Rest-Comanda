@@ -9,7 +9,7 @@ class Mozo extends User implements IEmpleados{
         parent::__construct($date, $estado, $tipo, $nombre, $clave, $cantOperaciones);
     }
     
-    public static function crearEmpleado($nombre, $clave,$tipo = null){
+    public static function crearEmpleado($nombre, $clave, $tipo = null){
         $date = date("Y-m-d H:i:s");
         $estado = "activo";
         

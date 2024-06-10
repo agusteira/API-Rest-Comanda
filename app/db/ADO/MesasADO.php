@@ -17,13 +17,30 @@ class MesasADO extends AccesoDatos
         }
         return self::$objAccesoDatos;
     }
+    //SELECT
+    public function traerTodasLasMesas(){
+        //consulta
+        $sql = "SELECT id, estado FROM mesas";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 
+    //INSERT
     public function altaMesa($mesa)
     {
         $sql = "INSERT INTO `mesas` (`id`, `estado`, `idPedidoActual`) 
             VALUES (:id, :estado, :idPedidoActual)";
 
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         // Vincular los valores a los parámetros
         $stmt->bindParam(':id', $mesa->_id);
@@ -42,31 +59,16 @@ class MesasADO extends AccesoDatos
         }
     }
 
-    public function traerTodasLasMesas(){
-        //consulta
-        $sql = "SELECT id, estado FROM mesas";
-        //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
-        try {
-            //ejecuta la consulta
-            $stmt->execute();
-            //obtiene los datos de la consulta
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
+    //UPDATE
     public function cambiarEstadoMesa($idMesa, $estado, $idPedido = 0){
         //consulta
         if ($estado != "cerrada"){
             $sql = "UPDATE mesas SET estado = :estado WHERE idMesa = :idMesa";
-            $stmt = $this->objetoPDO->prepare($sql);
+            $stmt = $this->prepararConsulta($sql);
         }else{
             // si la mesa se cambia a cerrada, se le cambia el id del pedido actual, asi no entra en conflicto
             $sql = "UPDATE mesas SET estado = :estado, idPedidoActual = :idPedidoActual WHERE idMesa = :idMesa";
-            $stmt = $this->objetoPDO->prepare($sql);
+            $stmt = $this->prepararConsulta($sql);
             $stmt->bindParam(':idPedidoActual', $idPedido, PDO::PARAM_STR);
         }
         

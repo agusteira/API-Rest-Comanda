@@ -24,7 +24,7 @@ class VentasPedidosADO extends AccesoDatos
         //consulta
         $sql = "SELECT * FROM ventas WHERE idPedido = :idPedido";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':idPedido', $idPedido, PDO::PARAM_STR);
 
@@ -43,7 +43,7 @@ class VentasPedidosADO extends AccesoDatos
         //consulta
         $sql = "SELECT * FROM ventas WHERE tipo = :tipo AND estado = :estado";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
@@ -65,7 +65,7 @@ class VentasPedidosADO extends AccesoDatos
         $sql = "INSERT INTO `ventas` (`idPedido`, `idProducto`, `cantidad`, `tipoProducto`,`estado`) 
             VALUES (:idPedido, :idProducto, :cantidad, :tipoproducto, :estado)";
 
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $estado = "pendiente";
         // Vincular los valores a los parámetros
@@ -90,7 +90,7 @@ class VentasPedidosADO extends AccesoDatos
         //consulta
         $sql = "UPDATE ventas SET tiempoEstimado = :tiempoEstimado WHERE idPedido = :idPedido AND idProducto = :idProducto ";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':idPedido', $idPedido, PDO::PARAM_STR);
         $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_INT);
@@ -114,7 +114,7 @@ class VentasPedidosADO extends AccesoDatos
         //consulta
         $sql = "UPDATE ventas SET estado = :estado WHERE idPedido = :idPedido AND idProducto = :idProducto ";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':idPedido', $idPedido, PDO::PARAM_STR);
         $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_INT);

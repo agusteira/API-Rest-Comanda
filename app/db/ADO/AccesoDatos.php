@@ -19,7 +19,7 @@ class AccesoDatos
 
     public function prepararConsulta($sql)
     {
-        //return $this->objetoPDO->prepare($sql);
+        return $this->objetoPDO->prepare($sql);
     }
 
     public function obtenerUltimoId()

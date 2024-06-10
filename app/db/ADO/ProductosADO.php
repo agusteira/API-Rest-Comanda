@@ -23,7 +23,7 @@ class ProductosADO extends AccesoDatos
         //consulta
         $sql = "SELECT id, tipo, nombre, importe, tiempoEstimado FROM productos";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
         try {
             //ejecuta la consulta
             $stmt->execute();
@@ -38,7 +38,7 @@ class ProductosADO extends AccesoDatos
         //consulta
         $sql = "SELECT nombre, importe FROM productos WHERE nombre = :nombre";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':nombre', $nombre);
         try {
@@ -56,7 +56,7 @@ class ProductosADO extends AccesoDatos
         //consulta
         $sql = "SELECT * FROM productos WHERE nombre = :nombre";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':nombre', $nombre);
         try {
@@ -76,7 +76,7 @@ class ProductosADO extends AccesoDatos
         $sql = "INSERT INTO `productos` (`tipo`, `nombre`, `importe`, `tiempoEstimado`) 
             VALUES (:tipo, :nombre, :importe, :tiempoEstimado)";
 
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         // Vincular los valores a los parámetros
         $stmt->bindParam(':tipo', $producto->_tipo);

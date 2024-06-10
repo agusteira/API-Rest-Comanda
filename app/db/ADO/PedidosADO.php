@@ -17,12 +17,48 @@ class PedidosADO extends AccesoDatos
         }
         return self::$objAccesoDatos;
     }
+    //SELECT
+    public function traerTodosLosPedidos(){
+        //consulta
+        $sql = "SELECT * FROM pedidos";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public function ObtenerEstadoPorID($id){
+        //consulta
+        $sql = "SELECT estado FROM pedidos WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    //INSERT
     public function altaPedido($pedido)
     {
         $sql = "INSERT INTO `pedidos` (`nombreCliente`, `idMesa`, `idMozo`, `estado`, `tiempoDeEsperaEstimado`, `tiempoDeDemora`, `importeFinal`, `horaEntrada`) 
             VALUES (:nombreCliente, :idMesa, :idMozo, :estado, :tiempoDeEsperaEstimado, :tiempoDeDemora, :importeFinal, :horaEntrada)";
 
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         // Vincular los valores a los parámetros
         $stmt->bindParam(':nombreCliente', $pedido->_nombreCliente);
@@ -42,26 +78,13 @@ class PedidosADO extends AccesoDatos
         }
         return $retorno;
     }
-    public function traerTodosLosPedidos(){
-        //consulta
-        $sql = "SELECT * FROM pedidos";
-        //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
-        try {
-            //ejecuta la consulta
-            $stmt->execute();
-            //obtiene los datos de la consulta
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
+
+    //UPDATE
     public function ModificarEstadoPorID($id, $estado){
         //consulta
         $sql = "UPDATE pedidos SET estado = :estado WHERE id = :id";
         //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
+        $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -76,24 +99,6 @@ class PedidosADO extends AccesoDatos
                 return false;
             }
         } catch (PDOException $e) {
-            return false;
-        }
-    }
-    public function ObtenerEstadoPorID($id){
-        //consulta
-        $sql = "SELECT estado FROM pedidos WHERE id = :id";
-        //prepara la consulta
-        $stmt = $this->objetoPDO->prepare($sql);
-
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-        try {
-            //ejecuta la consulta
-            $stmt->execute();
-            //obtiene los datos de la consulta
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result;
-        }catch (PDOException $e) {
             return false;
         }
     }
