@@ -39,30 +39,15 @@ class Socio extends User {
         return $data;
     }
 
-    public function suspenderUsuario($IDuser){
+    public static function SuspenderUsuario($IDuser){
         $datos = UsersADO::obtenerInstancia();
         $data = $datos->suspenderUsuario($IDuser);
         return $data;
     }
 
-    public function borrarUsuario($IDuser){
+    public static function BorrarUsuario($IDuser){
         $datos = UsersADO::obtenerInstancia();
         $data = $datos->borrarUsuario($IDuser);
         return $data;
     }
-
-    public function verUsuarios(){
-        
-    }
-
-    public function verMesas(){
-        /*
-        Lista todas las mesas y sus estados
-        */
-    }
-
-    public function cerrarMesa(){
-        
-    }
-
 }

@@ -40,6 +40,22 @@ class AutentificadorJWT
         }*/
     }
 
+    public static function VerificarTipoUsuario($token, $tipoUsuario)
+    {
+        $datos = JWT::decode(
+            $token,
+            self::$claveSecreta,
+            self::$tipoEncriptacion
+        );
+
+        if($datos->data->tipo == $tipoUsuario){
+            $retorno = true;
+        }else{
+            $retorno=false;
+        }
+
+        return $retorno;
+    }
 
     public static function ObtenerPayLoad($token)
     {

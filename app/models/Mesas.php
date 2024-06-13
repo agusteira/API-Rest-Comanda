@@ -4,7 +4,7 @@ include_once "././db/ADO/MesasADO.php";
 
 class Mesas{
     public $_estado;
-    public $_id;
+    public $_codigo;
     public $_idPedidoActual;
     public function __construct ($estado = "cerrada", $IdPedidoActual = 0){
         $this->_estado = $estado;
@@ -16,7 +16,6 @@ class Mesas{
         $mesa->generarIdAlfanumerico();
 
         $datos = MesasADO::obtenerInstancia();
-        
         $data = $datos->altaMesa($mesa);
         return $data;
     }
@@ -33,12 +32,12 @@ class Mesas{
         for ($i = 0; $i < $longitud; $i++) {
             $codigo .= $caracteres[rand(0, strlen($caracteres) - 1)];
         }
-        $this->_id = $codigo;
+        $this->_codigo = $codigo;
     }
 
-    public function cambiarEstadoMesa($id, $estado){
+    public static function CambiarEstadoMesa($id, $estado, $idPedido = null){
         $datos = MesasADO::obtenerInstancia();
-        $data = $datos->cambiarEstadoMesa($id, $estado);
+        $data = $datos->cambiarEstadoMesa($id, $estado, $idPedido);
         return $data;
     }
 

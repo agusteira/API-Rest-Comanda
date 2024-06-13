@@ -9,24 +9,17 @@ class UserController
     {
         //Aca hay que modificar el tema de la comprobacion del usuario SOCIO, y hacerlo mediante Middleware
         $parametros = $request->getParsedBody();
-
-        $usuarioID = $parametros['IDusuario'];
+        
         $tipoAlta = $parametros['tipo'];
         $nombre = $parametros['nombre'];
         $clave = $parametros['clave'];
 
-        if(User::comprobarTipoPorID($usuarioID, "socio")){ //comprueba que quien crea el usuario es un socio
-            if(Socio::crearUsuario($tipoAlta, $nombre, $clave)){
-                $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
-            }
-            else{
-                $payload = json_encode(array("mensaje" => "El usuario NO se pudo crear"));
-            }
+        if(Socio::crearUsuario($tipoAlta, $nombre, $clave)){
+            $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
         }
         else{
-            $payload = json_encode(array("mensaje" => "Este usuario NO puede crear USUARIOS"));
+            $payload = json_encode(array("mensaje" => "El usuario NO se pudo crear"));
         }
-        
 
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
@@ -48,7 +41,7 @@ class UserController
         $listaUsers = User::traerTodosLosUsuarios();
         foreach($listaUsers as $user){
             if($user["nombre"] == $nombre && $contraseña == $user["clave"] && $user["estado"] == "activo"){
-
+                
                 $data = array(
                     "id" => $user["id"],
                     "tipo" => $user["tipo"],
@@ -57,6 +50,7 @@ class UserController
 
                 $token = AutentificadorJWT::CrearToken($data);
                 $payload = json_encode(array('jwt' => $token));
+                break;
             }
             else{
                 $payload = json_encode(array("error" => "Usuario o contraseña invalido"));
@@ -67,5 +61,39 @@ class UserController
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
         //$response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function SuspenderUsuario($request, $response, $args)
+    {
+        $parametros = $request->getParsedBody();
+        
+        $idUsuario = $parametros['idUsuario'];
+
+        if(Socio::SuspenderUsuario($idUsuario)){
+            $payload = json_encode(array("mensaje" => "Usuario SUSPENDIDO con exito"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "El usuario NO se pudo SUSPENDER"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function BorrarUsuario($request, $response, $args)
+    {
+        $parametros = $request->getParsedBody();
+        
+        $idUsuario = $parametros['idUsuario'];
+
+        if(Socio::BorrarUsuario($idUsuario)){
+            $payload = json_encode(array("mensaje" => "Usuario BORRADO con exito"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "El usuario NO se pudo BORRAR"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

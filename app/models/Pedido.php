@@ -43,8 +43,8 @@ class Pedido{
         $data = $datosPedido->altaPedido($pedido);
 
         $pedido->asignarId();
-
         $pedido->guardarVentaPorProducto($productos);
+        Mesas::CambiarEstadoMesa($IDMesa, "con cliente esperando", $pedido->_id);
 
         return $data;
     }

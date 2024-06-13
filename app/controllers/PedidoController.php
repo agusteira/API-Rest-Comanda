@@ -1,6 +1,7 @@
 <?php
 
 include_once "models/Pedido.php";
+include_once "models/Mesas.php";
 
 class PedidoController{
     public static function AltaPedido($request, $response, $args){

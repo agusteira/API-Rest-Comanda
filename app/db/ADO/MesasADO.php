@@ -20,7 +20,7 @@ class MesasADO extends AccesoDatos
     //SELECT
     public function traerTodasLasMesas(){
         //consulta
-        $sql = "SELECT id, estado FROM mesas";
+        $sql = "SELECT * FROM mesas";
         //prepara la consulta
         $stmt = $this->prepararConsulta($sql);
         try {
@@ -37,13 +37,13 @@ class MesasADO extends AccesoDatos
     //INSERT
     public function altaMesa($mesa)
     {
-        $sql = "INSERT INTO `mesas` (`id`, `estado`, `idPedidoActual`) 
-            VALUES (:id, :estado, :idPedidoActual)";
+        $sql = "INSERT INTO `mesas` (`codigo`, `estado`, `idPedidoActual`) 
+            VALUES (:codigo, :estado, :idPedidoActual)";
 
         $stmt = $this->prepararConsulta($sql);
 
         // Vincular los valores a los parámetros
-        $stmt->bindParam(':id', $mesa->_id);
+        $stmt->bindParam(':codigo', $mesa->_codigo);
         $stmt->bindParam(':estado', $mesa->_estado);
         $stmt->bindParam(':idPedidoActual', $mesa->_idPedidoActual);
 
@@ -60,22 +60,19 @@ class MesasADO extends AccesoDatos
     }
 
     //UPDATE
-    public function cambiarEstadoMesa($idMesa, $estado, $idPedido = 0){
+    public function cambiarEstadoMesa($idMesa, $estado, $idPedido = null){
         //consulta
-        if ($estado != "cerrada"){
-            $sql = "UPDATE mesas SET estado = :estado WHERE idMesa = :idMesa";
-            $stmt = $this->prepararConsulta($sql);
-        }else{
-            // si la mesa se cambia a cerrada, se le cambia el id del pedido actual, asi no entra en conflicto
-            $sql = "UPDATE mesas SET estado = :estado, idPedidoActual = :idPedidoActual WHERE idMesa = :idMesa";
-            $stmt = $this->prepararConsulta($sql);
-            $stmt->bindParam(':idPedidoActual', $idPedido, PDO::PARAM_STR);
-        }
+
+        $sql = "UPDATE mesas SET estado = :estado, idPedidoActual = :idPedidoActual WHERE id = :idMesa";
+        $stmt = $this->prepararConsulta($sql);
         
-        $stmt->bindParam(':estado', $estado, PDO::PARAM_INT);
+        $stmt->bindParam(':idPedidoActual', $idPedido, PDO::PARAM_STR);
+        $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':idMesa', $idMesa, PDO::PARAM_INT);
 
         try {
+            var_dump($estado);
+            var_dump($idMesa);
             //ejecuta la consulta
             $stmt->execute();
             //obtiene las filas afectadas
