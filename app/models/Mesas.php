@@ -36,4 +36,10 @@ class Mesas{
         $this->_id = $codigo;
     }
 
+    public function cambiarEstadoMesa($id, $estado){
+        $datos = MesasADO::obtenerInstancia();
+        $data = $datos->cambiarEstadoMesa($id, $estado);
+        return $data;
+    }
+
 }

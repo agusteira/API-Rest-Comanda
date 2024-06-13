@@ -30,6 +30,7 @@ class Mozo extends User implements IEmpleados{
 
     public function relacionarFoto($foto, $idPedido){
         //Relaciona la foto con el pedido
+        //la columna de la BD deberia guardar la RUTA de la foto donde la guardamos
     }
 
 }

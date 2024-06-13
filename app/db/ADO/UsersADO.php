@@ -28,9 +28,23 @@ class UsersADO extends AccesoDatos
     }
     public function traerTodosLosUsuarios(){
         //consulta
-        $sql = "SELECT id, tipo, fechaEntrada, cantOperaciones, estado FROM User";
+        $sql = "SELECT * FROM User";
         //prepara la consulta
         $stmt = $this->prepararConsulta($sql);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    public function traerUsuarioPorID($id){
+        $stmt = $this->prepararConsulta("SELECT * FROM user WHERE ID = ?");
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+
         try {
             //ejecuta la consulta
             $stmt->execute();
@@ -45,8 +59,8 @@ class UsersADO extends AccesoDatos
     //INSERT
     public function altaUsuario($usuario)
     {
-        $sql = "INSERT INTO `user` (`tipo`, `fechaEntrada`, `cantOperaciones`, `estado`) 
-            VALUES (:tipo, :fechaEntrada, :cantOperaciones, :estado)";
+        $sql = "INSERT INTO `user` (`tipo`, `fechaEntrada`, `cantOperaciones`, `estado`, `nombre`, `clave`) 
+            VALUES (:tipo, :fechaEntrada, :cantOperaciones, :estado, :nombre, :clave)";
 
         $stmt = $this->prepararConsulta($sql);
 
@@ -55,6 +69,8 @@ class UsersADO extends AccesoDatos
         $stmt->bindParam(':fechaEntrada', $usuario->_date);
         $stmt->bindParam(':cantOperaciones',  $usuario->_cantOperaciones);
         $stmt->bindParam(':estado',  $usuario->_estado);
+        $stmt->bindParam(':nombre',  $usuario->_nombre);
+        $stmt->bindParam(':clave',  $usuario->_clave);
 
         // Ejecutar la consulta
         try {
