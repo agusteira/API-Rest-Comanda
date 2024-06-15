@@ -41,7 +41,7 @@ class VentasPedidosADO extends AccesoDatos
 
     public function ObtenerProductosPorSectorYEstado($tipo, $estado){
         //consulta
-        $sql = "SELECT * FROM ventas WHERE tipo = :tipo AND estado = :estado";
+        $sql = "SELECT * FROM ventas WHERE tipoProducto = :tipo AND estado = :estado";
         //prepara la consulta
         $stmt = $this->prepararConsulta($sql);
 
@@ -92,9 +92,11 @@ class VentasPedidosADO extends AccesoDatos
         //prepara la consulta
         $stmt = $this->prepararConsulta($sql);
 
-        $stmt->bindParam(':idPedido', $idPedido, PDO::PARAM_STR);
+        $stmt->bindParam(':idPedido', $idPedido, PDO::PARAM_INT);
         $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_INT);
-        $stmt->bindParam(':tiempoEstimado', $tiempoEstimado, PDO::PARAM_INT);
+        $stmt->bindParam(':tiempoEstimado', $tiempoEstimado, PDO::PARAM_STR);
+
+        var_dump($tiempoEstimado);
 
         try {
             //ejecuta la consulta
@@ -116,9 +118,11 @@ class VentasPedidosADO extends AccesoDatos
         //prepara la consulta
         $stmt = $this->prepararConsulta($sql);
 
-        $stmt->bindParam(':idPedido', $idPedido, PDO::PARAM_STR);
+        $stmt->bindParam(':idPedido', $idPedido, PDO::PARAM_INT);
         $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_INT);
-        $stmt->bindParam(':estado', $estado, PDO::PARAM_INT);
+        $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
+
+        var_dump(($estado));
 
         try {
             //ejecuta la consulta

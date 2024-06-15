@@ -46,6 +46,7 @@ class PedidosADO extends AccesoDatos
             $stmt->execute();
             //obtiene los datos de la consulta
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $result["estado"];
             return $result;
         }catch (PDOException $e) {
             return false;
@@ -88,7 +89,7 @@ class PedidosADO extends AccesoDatos
 
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
+        echo "hola";
         try {
             //ejecuta la consulta
             $stmt->execute();

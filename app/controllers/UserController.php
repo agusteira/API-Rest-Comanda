@@ -65,9 +65,11 @@ class UserController
 
     public static function SuspenderUsuario($request, $response, $args)
     {
-        $parametros = $request->getParsedBody();
+        //$parametros = $request->getParsedBody();
+        //var_dump($parametros);
+        var_dump($args);
+        $idUsuario = $args['id'];
         
-        $idUsuario = $parametros['idUsuario'];
 
         if(Socio::SuspenderUsuario($idUsuario)){
             $payload = json_encode(array("mensaje" => "Usuario SUSPENDIDO con exito"));
@@ -82,9 +84,8 @@ class UserController
 
     public static function BorrarUsuario($request, $response, $args)
     {
-        $parametros = $request->getParsedBody();
-        
-        $idUsuario = $parametros['idUsuario'];
+        var_dump($args);
+        $idUsuario = $args['id'];
 
         if(Socio::BorrarUsuario($idUsuario)){
             $payload = json_encode(array("mensaje" => "Usuario BORRADO con exito"));

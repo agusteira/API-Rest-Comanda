@@ -19,6 +19,7 @@ use Slim\Routing\RouteCollectorProxy;
 
 
 $app = AppFactory::create();
+$app->addBodyParsingMiddleware();
 
 $app->post('/login', \UserController::class . ':LoginUsuarios');
 /*
@@ -27,32 +28,37 @@ $app->group('/', function (RouteCollectorProxy $group) {
 });
 */
 
+//Ver estado del pedido de parte del cliente
+//Crear comentarios
+
 
 $app->group('/usuario', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UserController::class . ':ListaUsuarios');
     $group->post('[/]', \UserController::class . ':AltaUsuario');
-    $group->post('/suspender', \UserController::class . ':SuspenderUsuario'); //CAMBIAR A PUT
-    $group->post('/borrar', \UserController::class . ':BorrarUsuario'); //CAMBIAR A DELETE
+    $group->put('/{id}', \UserController::class . ':SuspenderUsuario');
+    $group->delete('/{id}', \UserController::class . ':BorrarUsuario');
 })->add(\AuthMiddleware::class . ':verificarSocio')->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/pedido', function (RouteCollectorProxy $group) {
     $group->get('[/]', \PedidoController::class . ':ListaPedidos');
     $group->post('[/]', \PedidoController::class . ':AltaPedido');
     //Relacionar foto por (put)
-    //Productos pendientes (get)
-    //cambiar estado de los productos (put)
+
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {
     $group->get('[/]', \MesaController::class . ':ListaMesas');
     $group->post('[/]', \MesaController::class . ':AltaMesa')->add(\AuthMiddleware::class . ':verificarSocio');
-    $group->post('/actualizarEstado', \MesaController::class . ':CambiarEstadoMesa'); // ESTO TIENE QUE PONERSE EN PUT
-    $group->post('/cerrar', \MesaController::class . ':CerrarMesa')->add(\AuthMiddleware::class . ':verificarSocio'); // ESTO TIENE QUE PONERSE EN PUT
+    $group->put('/actualizarEstado', \MesaController::class . ':CambiarEstadoMesa'); 
+    $group->put('/cerrar', \MesaController::class . ':CerrarMesa')->add(\AuthMiddleware::class . ':verificarSocio');
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/producto', function (RouteCollectorProxy $group) {
     $group->get('[/]', \ProductoController::class . ':ListaProductos');
+    $group->get('/verProductosPendientes', \ProductoController::class . ':ListaProductosPendientes');
     $group->post('[/]', \ProductoController::class . ':AltaProducto')->add(\AuthMiddleware::class . ':verificarSocio');
+    $group->put('/tomarProducto', \ProductoController::class . ':TomarProducto');
+    $group->put('/terminarProducto', \ProductoController::class . ':TerminarProducto');
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->run();

@@ -2,7 +2,6 @@
 
 include_once "models/Pedido.php";
 include_once "models/Mesas.php";
-
 class PedidoController{
     public static function AltaPedido($request, $response, $args){
         //Aca hay que modificar el tema de la comprobacion del usuario creador y el tipo de producto ingresado, y hacerlo mediante Middleware
@@ -30,4 +29,5 @@ class PedidoController{
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
+
 }
