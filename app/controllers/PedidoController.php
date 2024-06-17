@@ -10,15 +10,19 @@ class PedidoController{
         $nombreCliente = $parametros['nombreCliente'];
         $IDMesa = $parametros['IDmesa'];
         $IDMozo = $parametros['IDMozo'];
-        $productos = $parametros['productos'];
 
+        $jsonString = $parametros['productos'];
+        $productos = json_decode($jsonString, true);
+        
+
+        
         if(Pedido::CrearPedido($nombreCliente,$IDMesa,$IDMozo,$productos)){
             $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
         }
         else{
             $payload = json_encode(array("mensaje" => "El pedido NO se pudo crear"));
         }
-
+        
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }

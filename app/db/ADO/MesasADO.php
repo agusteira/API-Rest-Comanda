@@ -34,6 +34,23 @@ class MesasADO extends AccesoDatos
         }
     }
 
+    public function traerUnaMesa($idMesa){
+        //consulta
+        $sql = "SELECT * FROM mesas WHERE id = :idMesa";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+        $stmt->bindParam(':idMesa', $idMesa, PDO::PARAM_INT);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     //INSERT
     public function altaMesa($mesa)
     {
@@ -61,6 +78,13 @@ class MesasADO extends AccesoDatos
 
     //UPDATE
     public function cambiarEstadoMesa($idMesa, $estado, $idPedido = null){
+        var_dump($estado);
+        if ($estado != "cerrada" && $idPedido == null){
+            echo "hola";
+            $mesaDelPedido = self::traerUnaMesa($idMesa);
+            $idPedido = $mesaDelPedido[0]["idPedidoActual"]; //al devolverme la mesa, me devuelve un array adentro de un array, y ahi estan los datos
+        }
+
         //consulta
 
         $sql = "UPDATE mesas SET estado = :estado, idPedidoActual = :idPedidoActual WHERE id = :idMesa";

@@ -27,44 +27,40 @@ class Pedido{
         $this->_tiempoDemora = $tiempoDemora; 
         $this->_date = $momentoEntrada;
     }
-    public static function CrearPedido($nombreCliente,$IDMesa,$IDMozo,$productosString){
+    public static function CrearPedido($nombreCliente,$IDMesa,$IDMozo,$arrayProductos){
         $estado = "pendiente";
         $tiempoDeEsperaEstimado = 0; //Esto lo tiene que modificar el personal de gastronomia
         $tiempoDemora = 0; //Esto se modifica cuando entre el cliente a ver el pedido
         $date = date("Y-m-d H:i:s"); //momento en el que se crea el pedido
         $pedido = new Pedido($nombreCliente,$IDMesa,$IDMozo, $estado, $tiempoDeEsperaEstimado, $tiempoDemora, $date);
 
-        $productos = explode(",", $productosString);
-        $pedido->_importeFinal = $pedido->calcularImporteFinal($productos);
-
-        
+        $pedido->_importeFinal = $pedido->calcularImporteFinal($arrayProductos);
 
         $datosPedido = PedidosADO::obtenerInstancia();
         $data = $datosPedido->altaPedido($pedido);
 
         $pedido->asignarId();
-        $pedido->guardarVentaPorProducto($productos);
+        $pedido->guardarVentaPorProducto($arrayProductos);
         Mesas::CambiarEstadoMesa($IDMesa, "con cliente esperando", $pedido->_id);
 
         return $data;
     }
     public function guardarVentaPorProducto($productos){
         $datosVentas = VentasPedidosADO::obtenerInstancia();
-        foreach ($productos as $productoNombre){
+        foreach ($productos as $producto){
             $datoProductos = ProductosADO::obtenerInstancia();
-            $producto = $datoProductos->obtenerProductoPorNombre($productoNombre);
-            $data = $datosVentas->altaVenta($this, $producto);
+            $productoInfo = $datoProductos->obtenerProductoPorNombre($producto["nombre"]);
+            $datosVentas->altaVenta($this, $productoInfo, $producto["cantidad"]);
         }
     }
     public function calcularImporteFinal($productos){
         $importe = 0;
         foreach ($productos as $producto){
             $datos = ProductosADO::obtenerInstancia();
-            $importeProducto = $datos->obtenerImportePorNombre($producto);
-
+            $importeProducto = $datos->obtenerImportePorNombre($producto["nombre"]);
+            $importeProducto = $importeProducto * $producto["cantidad"];
             $importe += $importeProducto;
         }
-        //Se conecta a la base de datos de ventas
         return $importe;
     }
     public function asignarId(){

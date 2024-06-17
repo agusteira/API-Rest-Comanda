@@ -61,6 +61,13 @@ $app->group('/producto', function (RouteCollectorProxy $group) {
     $group->put('/terminarProducto', \ProductoController::class . ':TerminarProducto');
 })->add(\AuthMiddleware::class . ':verificarToken');
 
+$app->group('/cliente', function (RouteCollectorProxy $group) {
+    $group->get('[/]', \ProductoController::class . ':ListaProductosPendientes');   //Ver tiempo restante
+    $group->post('[/]', \ProductoController::class . ':AltaProducto');              //Emitir opinion
+
+});
+
+
 $app->run();
 
 // php -S localhost:666 -t app (para prender el servidor)

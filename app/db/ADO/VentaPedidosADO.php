@@ -60,7 +60,7 @@ class VentasPedidosADO extends AccesoDatos
     }
 
     //INSERT
-    public function altaVenta($pedido, $producto)
+    public function altaVenta($pedido, $producto, $cantidad)
     {
         $sql = "INSERT INTO `ventas` (`idPedido`, `idProducto`, `cantidad`, `tipoProducto`,`estado`) 
             VALUES (:idPedido, :idProducto, :cantidad, :tipoproducto, :estado)";
@@ -71,7 +71,7 @@ class VentasPedidosADO extends AccesoDatos
         // Vincular los valores a los parámetros
         $stmt->bindParam(':idPedido', $pedido->_id);
         $stmt->bindParam(':idProducto', $producto["id"]);
-        $stmt->bindParam(':cantidad',  $producto["importe"]);
+        $stmt->bindParam(':cantidad',  $cantidad);
         $stmt->bindParam(':tipoproducto',  $producto["tipo"]);
         $stmt->bindParam(':estado', $estado);
 
