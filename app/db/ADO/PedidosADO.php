@@ -89,7 +89,6 @@ class PedidosADO extends AccesoDatos
 
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        echo "hola";
         try {
             //ejecuta la consulta
             $stmt->execute();
@@ -104,4 +103,26 @@ class PedidosADO extends AccesoDatos
         }
     }
 
+    public function RelacionarFoto($id, $rutaFoto){
+        //consulta
+        $sql = "UPDATE pedidos SET foto = :foto WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        $stmt->bindParam(':foto', $rutaFoto, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //Se fija si hubo cambios en la tabla
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

@@ -42,8 +42,7 @@ $app->group('/usuario', function (RouteCollectorProxy $group) {
 $app->group('/pedido', function (RouteCollectorProxy $group) {
     $group->get('[/]', \PedidoController::class . ':ListaPedidos');
     $group->post('[/]', \PedidoController::class . ':AltaPedido');
-    //Relacionar foto por (put)
-
+    $group->post('/RelacionarFoto', \PedidoController::class . ':RelacionarFoto');
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {

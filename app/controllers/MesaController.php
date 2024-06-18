@@ -37,7 +37,7 @@ class MesaController{
         }
         else{
             $payload = json_encode(array("mensaje" => "La mesa NO se pudo ACTUALIZAR"));
-        };
+        }
 
         $response->getBody()->write($payload);
 

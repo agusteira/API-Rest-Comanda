@@ -27,6 +27,8 @@ class Pedido{
         $this->_tiempoDemora = $tiempoDemora; 
         $this->_date = $momentoEntrada;
     }
+
+    //Crear
     public static function CrearPedido($nombreCliente,$IDMesa,$IDMozo,$arrayProductos){
         $estado = "pendiente";
         $tiempoDeEsperaEstimado = 0; //Esto lo tiene que modificar el personal de gastronomia
@@ -53,6 +55,39 @@ class Pedido{
             $datosVentas->altaVenta($this, $productoInfo, $producto["cantidad"]);
         }
     }
+
+    //leer
+    public static function traerTodo(){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->traerTodosLosPedidos();
+        return $data;
+    }
+
+    public function asignarId(){
+        $datosPedido = PedidosADO::obtenerInstancia();
+        $data = $datosPedido->obtenerUltimoId();
+        $this->_id = $data;
+    }
+
+    //Modificar
+    public static function RelacionarFoto($idPedido, $foto){
+        $datos = PedidosADO::obtenerInstancia();
+
+        $rutaTemporal =  $foto->getStream()->getMetadata('uri');
+        var_dump($rutaTemporal);
+        $nombreImagen = "P" . $idPedido . ".jpg";
+        $carpetaDestino = 'db/database/ImagenesDeLosClientes/';
+        $rutaDestino = $carpetaDestino . $nombreImagen;
+        
+        if (move_uploaded_file($rutaTemporal, $carpetaDestino . $nombreImagen)) {
+            $retorno = $datos->RelacionarFoto($idPedido, $rutaDestino);
+        } else {
+            $retorno = false;
+        }
+        return $retorno;
+    }
+
+    //Otras funciones
     public function calcularImporteFinal($productos){
         $importe = 0;
         foreach ($productos as $producto){
@@ -63,14 +98,7 @@ class Pedido{
         }
         return $importe;
     }
-    public function asignarId(){
-        $datosPedido = PedidosADO::obtenerInstancia();
-        $data = $datosPedido->obtenerUltimoId();
-        $this->_id = $data;
-    }
-    public static function traerTodo(){
-        $datos = PedidosADO::obtenerInstancia();
-        $data = $datos->traerTodosLosPedidos();
-        return $data;
-    }
+
+
+
 }

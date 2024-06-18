@@ -34,4 +34,28 @@ class PedidoController{
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    public static function RelacionarFoto($request, $response, $args){
+        $uploadedFiles = $request->getUploadedFiles();
+        $parametros = $request->getParsedBody();
+
+        
+        $foto = $uploadedFiles['foto'];
+        $idPedido = $parametros["idPedido"];
+
+        if(Pedido::RelacionarFoto($idPedido, $foto)){
+            $payload = json_encode(array("mensaje" => "Foto relacionada con exito"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "Error al relacionar la foto"));
+        }
+
+        // Verifica si hubo algún error al subir el archivo
+        /*
+        if ($photo->getError() === UPLOAD_ERR_OK) {
+        }
+        */
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+        }
+
 }
