@@ -17,8 +17,9 @@ class Pedido{
     public $_importeFinal;
     public $_date;
     public $_comentarios;
+    public $_codigoAlfanumerico;
 
-    public function __construct ($nombreCliente, $IDMesa, $IDMozo, $estado, $tiempoDeEsperaEstimado, $tiempoDemora, $momentoEntrada){
+    public function __construct ($nombreCliente, $IDMesa, $IDMozo, $estado, $tiempoDeEsperaEstimado, $tiempoDemora, $momentoEntrada, $codigoAlfanumerico){
         $this->_nombreCliente = $nombreCliente;
         $this->_idMesa = $IDMesa;
         $this->_idMozo = $IDMozo;
@@ -26,6 +27,7 @@ class Pedido{
         $this->_tiempoEsperaEstimado = $tiempoDeEsperaEstimado; 
         $this->_tiempoDemora = $tiempoDemora; 
         $this->_date = $momentoEntrada;
+        $this->_codigoAlfanumerico = $codigoAlfanumerico;
     }
 
     //Crear
@@ -34,7 +36,8 @@ class Pedido{
         $tiempoDeEsperaEstimado = 0; //Esto lo tiene que modificar el personal de gastronomia
         $tiempoDemora = 0; //Esto se modifica cuando entre el cliente a ver el pedido
         $date = date("Y-m-d H:i:s"); //momento en el que se crea el pedido
-        $pedido = new Pedido($nombreCliente,$IDMesa,$IDMozo, $estado, $tiempoDeEsperaEstimado, $tiempoDemora, $date);
+        $codigoAlfanumerico = self::GenerarCodigoAlfanumerico();
+        $pedido = new Pedido($nombreCliente,$IDMesa,$IDMozo, $estado, $tiempoDeEsperaEstimado, $tiempoDemora, $date, $codigoAlfanumerico);
 
         $pedido->_importeFinal = $pedido->calcularImporteFinal($arrayProductos);
 
@@ -62,11 +65,10 @@ class Pedido{
         $data = $datos->traerTodosLosPedidos();
         return $data;
     }
-
-    public function asignarId(){
-        $datosPedido = PedidosADO::obtenerInstancia();
-        $data = $datosPedido->obtenerUltimoId();
-        $this->_id = $data;
+    public static function ObtenerTiempoRestante($codigoPedido, $codigoMesa){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->ObtenerTiempoRestante($codigoPedido);
+        return $data;
     }
 
     //Modificar
@@ -97,6 +99,21 @@ class Pedido{
             $importe += $importeProducto;
         }
         return $importe;
+    }
+
+    public static function GenerarCodigoAlfanumerico($longitud = 5) {
+        $caracteres = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $codigo = "";
+        for ($i = 0; $i < $longitud; $i++) {
+            $codigo .= $caracteres[rand(0, strlen($caracteres) - 1)];
+        }
+        return $codigo;
+    }
+
+    public function asignarId(){
+        $datosPedido = PedidosADO::obtenerInstancia();
+        $data = $datosPedido->obtenerUltimoId();
+        $this->_id = $data;
     }
 
 

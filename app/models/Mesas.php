@@ -13,7 +13,7 @@ class Mesas{
 
     public static function CrearMesa(){
         $mesa = new Mesas();
-        $mesa->generarIdAlfanumerico();
+        $mesa->GenerarCodigoDeMesa();
 
         $datos = MesasADO::obtenerInstancia();
         $data = $datos->altaMesa($mesa);
@@ -26,9 +26,9 @@ class Mesas{
         return $data;
     }
 
-    public function generarIdAlfanumerico($longitud = 5) {
+    public function GenerarCodigoDeMesa($longitud = 3) {
         $caracteres = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $codigo = '';
+        $codigo = "M-";
         for ($i = 0; $i < $longitud; $i++) {
             $codigo .= $caracteres[rand(0, strlen($caracteres) - 1)];
         }

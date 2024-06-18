@@ -126,4 +126,26 @@ class UsersADO extends AccesoDatos
             return false;
         }
     }
+
+    public function SumarOperacion($IDuser){
+        //consulta
+        $sql = "UPDATE user SET cantOperaciones = cantOperaciones + 1 WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        $stmt->bindParam(':id', $IDuser);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

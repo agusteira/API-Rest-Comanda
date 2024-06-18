@@ -61,7 +61,7 @@ $app->group('/producto', function (RouteCollectorProxy $group) {
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/cliente', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \ProductoController::class . ':ListaProductosPendientes');   //Ver tiempo restante
+    $group->get('[/]', \PedidoController::class . ':VerTiempoRestante');   //Ver tiempo restante
     $group->post('[/]', \ProductoController::class . ':AltaProducto');              //Emitir opinion
 
 });

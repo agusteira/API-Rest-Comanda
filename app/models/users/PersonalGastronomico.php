@@ -32,11 +32,13 @@ class PersonalGastronomico extends User implements IEmpleados{
 
     //Modifica los estados de la tabla ventas y pedidos, para ponerlas en preparacion
     //agrega tiempo estimado a la tabla ventas y suma una operacion
-    public static function TomarPedido($idPedido, $idProducto, $tiempoEstimado){
+    public static function TomarPedido($idPedido, $idProducto, $tiempoEstimado, $idUser){
         $dataVentas = self::ModificarEstado($idPedido, $idProducto, "en preparacion");
         self::agregarTiempoEstimado($idPedido,$idProducto,$tiempoEstimado);
 
         //Sumar operacion a la tabla usuarios
+        $dataUser = UsersADO::obtenerInstancia();
+        $dataUser->sumarOperacion($idUser);
 
         $datosPedido = PedidosADO::obtenerInstancia();
         if ($datosPedido->ObtenerEstadoPorID($idPedido) == "pendiente"){

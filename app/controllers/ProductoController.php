@@ -2,6 +2,7 @@
 
 include_once "models/Productos.php";
 include_once "models/users/PersonalGastronomico.php";
+include_once "utils/AutentificadorJWT.php";
 
 class ProductoController{
 
@@ -54,14 +55,16 @@ class ProductoController{
         //$estado = $parametros['estado'];
         $tiempoEstimado = $parametros['tiempoEstimado'];
 
-
-        if(PersonalGastronomico::TomarPedido($idPedido, $idProducto, $tiempoEstimado)){
-            $payload = json_encode(array("mensaje" => "Producto creado con exito"));
+        //Data del usuario mediante su TOKEN
+        $dataUsuario = AutentificadorJWT::ObtenerData($request);
+        
+        if(PersonalGastronomico::TomarPedido($idPedido, $idProducto, $tiempoEstimado, $dataUsuario->id)){
+            $payload = json_encode(array("mensaje" => "Pedido tomado con exito"));
         }
         else{
-            $payload = json_encode(array("mensaje" => "El producto NO se pudo crear"));
+            $payload = json_encode(array("mensaje" => "El pedido no se pudo tomar"));
         }
-
+        
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }

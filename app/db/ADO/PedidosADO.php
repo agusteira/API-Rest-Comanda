@@ -33,6 +33,26 @@ class PedidosADO extends AccesoDatos
             return false;
         }
     }
+
+    public function TraerUnoPorCodigo($codigo){
+        //consulta
+        $sql = "SELECT * FROM pedidos WHERE codigo = :codigo";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        $stmt->bindParam(':codigo', $codigo);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public function ObtenerEstadoPorID($id){
         //consulta
         $sql = "SELECT estado FROM pedidos WHERE id = :id";
@@ -53,11 +73,25 @@ class PedidosADO extends AccesoDatos
         }
     }
 
+    public function ObtenerTiempoRestante($codigo){
+        $pedido = $this->TraerUnoPorCodigo($codigo);
+        $tiempoDeEsperaEstimado = $pedido["tiempoDeEsperaEstimado"];
+        $estado  = $pedido["estado"];
+        
+        if ($tiempoDeEsperaEstimado != "00:00:00" && $estado != "servido"){ //Si ya esta servido el plato, se deshabilita la opcion de poder ver el tiempo de espera
+            $retorno = $tiempoDeEsperaEstimado;
+        }else{
+            $retorno = false;
+        }
+
+        return $retorno;
+    }
+
     //INSERT
     public function altaPedido($pedido)
     {
-        $sql = "INSERT INTO `pedidos` (`nombreCliente`, `idMesa`, `idMozo`, `estado`, `tiempoDeEsperaEstimado`, `tiempoDeDemora`, `importeFinal`, `horaEntrada`) 
-            VALUES (:nombreCliente, :idMesa, :idMozo, :estado, :tiempoDeEsperaEstimado, :tiempoDeDemora, :importeFinal, :horaEntrada)";
+        $sql = "INSERT INTO `pedidos` (`nombreCliente`, `idMesa`, `idMozo`, `estado`, `tiempoDeEsperaEstimado`, `tiempoDeDemora`, `importeFinal`, `horaEntrada`, `codigo`) 
+            VALUES (:nombreCliente, :idMesa, :idMozo, :estado, :tiempoDeEsperaEstimado, :tiempoDeDemora, :importeFinal, :horaEntrada, :codigo)";
 
         $stmt = $this->prepararConsulta($sql);
 
@@ -70,6 +104,8 @@ class PedidosADO extends AccesoDatos
         $stmt->bindParam(':tiempoDeDemora', $pedido->_tiempoDemora);
         $stmt->bindParam(':importeFinal',  $pedido->_importeFinal);
         $stmt->bindParam(':horaEntrada',  $pedido->_date);
+        $stmt->bindParam(':codigo',  $pedido->_codigoAlfanumerico);
+
         // Ejecutar la consulta
         try {
             $stmt->execute();

@@ -69,14 +69,17 @@ class AutentificadorJWT
         );
     }
 
-    public static function ObtenerData($token)
+    public static function ObtenerData($request)
     {
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
         return JWT::decode(
             $token,
             self::$claveSecreta,
             self::$tipoEncriptacion
         )->data;
     }
+
 
     //Actualmente no me interesa el tema de verificar si es el mismo quien entra o no
     //asi que procedo a comentarlo por si algun dia lo necesito

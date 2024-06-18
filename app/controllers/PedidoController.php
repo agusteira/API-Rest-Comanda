@@ -9,14 +9,15 @@ class PedidoController{
 
         $nombreCliente = $parametros['nombreCliente'];
         $IDMesa = $parametros['IDmesa'];
-        $IDMozo = $parametros['IDMozo'];
+        //$IDMozo = $parametros['IDMozo'];
 
         $jsonString = $parametros['productos'];
         $productos = json_decode($jsonString, true);
         
-
+        //Data del usuario mediante su TOKEN para obtener el ID del mozo
+        $dataUsuario = AutentificadorJWT::ObtenerData($request);
         
-        if(Pedido::CrearPedido($nombreCliente,$IDMesa,$IDMozo,$productos)){
+        if(Pedido::CrearPedido($nombreCliente,$IDMesa,$dataUsuario->id,$productos)){
             $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
         }
         else{
@@ -38,7 +39,7 @@ class PedidoController{
         $uploadedFiles = $request->getUploadedFiles();
         $parametros = $request->getParsedBody();
 
-        
+
         $foto = $uploadedFiles['foto'];
         $idPedido = $parametros["idPedido"];
 
@@ -56,6 +57,24 @@ class PedidoController{
         */
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function VerTiempoRestante($request, $response, $args){
+        $parametros = $request->getQueryParams();
+
+        $codigoMesa = $parametros['codigoMesa'];
+        $codigoPedido = $parametros['codigoPedido'];
+        
+        if(Pedido::ObtenerTiempoRestante($codigoMesa, $codigoPedido) != false){
+            $tiempoRestante = Pedido::ObtenerTiempoRestante($codigoMesa, $codigoPedido);
+            $payload = json_encode(array("tiempoRestante" => $tiempoRestante));
+        }else{
+            $payload = json_encode(array("tiempoRestante" => "Tiempo estimado NO disponible"));
         }
+
+        
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 
 }
