@@ -7,7 +7,6 @@ class UserController
 {
     public static function AltaUsuario($request, $response, $args)
     {
-        //Aca hay que modificar el tema de la comprobacion del usuario SOCIO, y hacerlo mediante Middleware
         $parametros = $request->getParsedBody();
         
         $tipoAlta = $parametros['tipo'];
@@ -67,7 +66,6 @@ class UserController
     {
         //$parametros = $request->getParsedBody();
         //var_dump($parametros);
-        var_dump($args);
         $idUsuario = $args['id'];
         
 

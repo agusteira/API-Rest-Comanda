@@ -9,7 +9,6 @@ class PedidoController{
 
         $nombreCliente = $parametros['nombreCliente'];
         $IDMesa = $parametros['IDmesa'];
-        //$IDMozo = $parametros['IDMozo'];
 
         $jsonString = $parametros['productos'];
         $productos = json_decode($jsonString, true);

@@ -7,7 +7,6 @@ include_once "utils/AutentificadorJWT.php";
 class ProductoController{
 
     public static function AltaProducto($request, $response, $args){
-        //Aca hay que modificar el tema de la comprobacion del usuario creador y el tipo de producto ingresado, y hacerlo mediante Middleware
         $parametros = $request->getParsedBody();
 
         $tipoProducto = $parametros['tipoProducto'];
@@ -47,12 +46,10 @@ class ProductoController{
     }
 
     public static function TomarProducto($request, $response, $args){
-        //Aca hay que modificar el tema de la comprobacion del usuario creador y el tipo de producto ingresado, y hacerlo mediante Middleware
         $parametros = $request->getParsedBody();
 
         $idPedido = $parametros['idPedido'];
         $idProducto = $parametros['idProducto'];
-        //$estado = $parametros['estado'];
         $tiempoEstimado = $parametros['tiempoEstimado'];
 
         //Data del usuario mediante su TOKEN
@@ -68,14 +65,11 @@ class ProductoController{
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
-
     public static function TerminarProducto($request, $response, $args){
-        //Aca hay que modificar el tema de la comprobacion del usuario creador y el tipo de producto ingresado, y hacerlo mediante Middleware
         $parametros = $request->getParsedBody();
 
         $idPedido = $parametros['idPedido'];
         $idProducto = $parametros['idProducto'];
-        //$estado = $parametros['estado'];
 
 
         if(PersonalGastronomico::ModificarEstado($idPedido, $idProducto, "listo para servir")){

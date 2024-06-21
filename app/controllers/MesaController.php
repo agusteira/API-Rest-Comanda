@@ -25,8 +25,6 @@ class MesaController{
     }
 
     public static function CambiarEstadoMesa($request, $response, $args){
-        //Mediante middleware comprobar que exista el estado de mesa, y que sea
-        //los 3 posibles y NO se pueda cerrar mesas
         $parametros = $request->getParsedBody();
 
         $IDMesa = $parametros['IDmesa'];
@@ -45,8 +43,6 @@ class MesaController{
     }
 
     public static function CerrarMesa($request, $response, $args){
-        //Mediante middleware comprobar que exista el estado de mesa, y que sea
-        //los 3 posibles y NO se pueda cerrar mesas
         $parametros = $request->getParsedBody();
 
         $IDMesa = $parametros['IDmesa'];

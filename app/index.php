@@ -8,6 +8,7 @@ require_once "controllers/MesaController.php";
 require_once "controllers/PedidoController.php";
 require_once 'utils/AutentificadorJWT.php';
 require_once 'middlewares/AuthMiddleware.php';
+require_once 'middlewares/ParamMiddlewares.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -34,35 +35,35 @@ $app->group('/', function (RouteCollectorProxy $group) {
 
 $app->group('/usuario', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UserController::class . ':ListaUsuarios');
-    $group->post('[/]', \UserController::class . ':AltaUsuario');
+    $group->post('[/]', \UserController::class . ':AltaUsuario')->add(\ParamMiddlewares::class . ':AltaUsuario');
     $group->put('/{id}', \UserController::class . ':SuspenderUsuario');
     $group->delete('/{id}', \UserController::class . ':BorrarUsuario');
 })->add(\AuthMiddleware::class . ':verificarSocio')->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/pedido', function (RouteCollectorProxy $group) {
     $group->get('[/]', \PedidoController::class . ':ListaPedidos');
-    $group->post('[/]', \PedidoController::class . ':AltaPedido');
-    $group->post('/RelacionarFoto', \PedidoController::class . ':RelacionarFoto');
+    $group->post('[/]', \PedidoController::class . ':AltaPedido')->add(\ParamMiddlewares::class . ':AltaPedido');
+    $group->post('/RelacionarFoto', \PedidoController::class . ':RelacionarFoto')->add(\ParamMiddlewares::class . ':RelacionarFoto');
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {
     $group->get('[/]', \MesaController::class . ':ListaMesas');
     $group->post('[/]', \MesaController::class . ':AltaMesa')->add(\AuthMiddleware::class . ':verificarSocio');
-    $group->put('/actualizarEstado', \MesaController::class . ':CambiarEstadoMesa'); 
-    $group->put('/cerrar', \MesaController::class . ':CerrarMesa')->add(\AuthMiddleware::class . ':verificarSocio');
+    $group->put('/actualizarEstado', \MesaController::class . ':CambiarEstadoMesa')->add(\ParamMiddlewares::class . ':CambiarEstadoMesa');
+    $group->put('/cerrar', \MesaController::class . ':CerrarMesa')->add(\ParamMiddlewares::class . ':CerrarMesa')->add(\AuthMiddleware::class . ':verificarSocio');
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/producto', function (RouteCollectorProxy $group) {
     $group->get('[/]', \ProductoController::class . ':ListaProductos');
-    $group->get('/verProductosPendientes', \ProductoController::class . ':ListaProductosPendientes');
-    $group->post('[/]', \ProductoController::class . ':AltaProducto')->add(\AuthMiddleware::class . ':verificarSocio');
-    $group->put('/tomarProducto', \ProductoController::class . ':TomarProducto');
-    $group->put('/terminarProducto', \ProductoController::class . ':TerminarProducto');
+    $group->get('/verProductosPendientes', \ProductoController::class . ':ListaProductosPendientes'); //CREAR MW PARA MEDIANTE SU TOKEN DECIDIR QUE PRODUCTO TIENE PENDIENTES
+    $group->post('[/]', \ProductoController::class . ':AltaProducto')->add(\ParamMiddlewares::class . ':AltaProducto')->add(\AuthMiddleware::class . ':verificarSocio');
+    $group->put('/tomarProducto', \ProductoController::class . ':TomarProducto')->add(\ParamMiddlewares::class . ':TomarProducto');
+    $group->put('/terminarProducto', \ProductoController::class . ':TerminarProducto')->add(\ParamMiddlewares::class . ':TerminarProducto');
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/cliente', function (RouteCollectorProxy $group) {
     $group->get('[/]', \PedidoController::class . ':VerTiempoRestante');   //Ver tiempo restante
-    $group->post('[/]', \ProductoController::class . ':AltaProducto');              //Emitir opinion
+    //$group->post('[/]', \ProductoController::class . ':AltaProducto');              //Emitir opinion
 
 });
 
