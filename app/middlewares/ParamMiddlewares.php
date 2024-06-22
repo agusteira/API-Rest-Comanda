@@ -4,6 +4,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Slim\Psr7\Response;
 
+//Middlewares para verificar parametros
 class ParamMiddlewares
 {
     public static function VerificarTipoUsuario(Request $request, RequestHandler $handler, $tipoUsuario){
@@ -70,8 +71,9 @@ class ParamMiddlewares
 
     public static function RelacionarFoto(Request $request, RequestHandler $handler){
         $parametros = $request->getParsedBody();
+        $uploadedFiles = $request->getUploadedFiles();
 
-        if(isset($parametros["foto"], $parametros["idPedido"])){
+        if(isset($uploadedFiles["foto"], $parametros["idPedido"])){
             $response = $handler->handle($request);
         } else {
             $response = new Response();

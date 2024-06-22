@@ -16,21 +16,9 @@ class Mozo extends User implements IEmpleados{
         $user = new Mozo($date, $estado, $nombre, $clave, "mozo");
         return $user;
     }
-    
-    /*
-    public function crearPedido($nombreCliente, $idMesa, $productos){
-        $pedido = new Pedido($nombreCliente, $idMesa, $this->_id, $productos);
-    }
-    */
-    
 
     public function modificarEstadoMesa($idMesa){
         //Modifica el estado de la mesa
-    }
-
-    public function relacionarFoto($foto, $idPedido){
-        //Relaciona la foto con el pedido
-        //la columna de la BD deberia guardar la RUTA de la foto donde la guardamos
     }
 
 }

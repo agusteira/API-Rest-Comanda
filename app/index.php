@@ -42,8 +42,8 @@ $app->group('/usuario', function (RouteCollectorProxy $group) {
 
 $app->group('/pedido', function (RouteCollectorProxy $group) {
     $group->get('[/]', \PedidoController::class . ':ListaPedidos');
-    $group->post('[/]', \PedidoController::class . ':AltaPedido')->add(\ParamMiddlewares::class . ':AltaPedido');
-    $group->post('/RelacionarFoto', \PedidoController::class . ':RelacionarFoto')->add(\ParamMiddlewares::class . ':RelacionarFoto');
+    $group->post('[/]', \PedidoController::class . ':AltaPedido')->add(\ParamMiddlewares::class . ':AltaPedido'); //Verificar que sea mozo o socio
+    $group->post('/RelacionarFoto', \PedidoController::class . ':RelacionarFoto')->add(\ParamMiddlewares::class . ':RelacionarFoto'); //Verificar que sea mozo o socio
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/mesa', function (RouteCollectorProxy $group) {
@@ -72,5 +72,8 @@ $app->run();
 
 // php -S localhost:666 -t app (para prender el servidor)
 
+/*
+[{"nombre":"milanesa a caballo", "cantidad": 1}, {"nombre":"hamburguesa de garbanzo", "cantidad": 2}, {"nombre":"corona", "cantidad": 1}, {"nombre":"daikiri", "cantidad": 1}]
+ */
 ?>
 

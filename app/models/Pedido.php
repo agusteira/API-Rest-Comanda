@@ -65,7 +65,7 @@ class Pedido{
         $data = $datos->traerTodosLosPedidos();
         return $data;
     }
-    public static function ObtenerTiempoRestante($codigoPedido, $codigoMesa){
+    public static function ObtenerTiempoRestante($codigoMesa, $codigoPedido){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->ObtenerTiempoRestante($codigoPedido);
         return $data;
@@ -76,7 +76,6 @@ class Pedido{
         $datos = PedidosADO::obtenerInstancia();
 
         $rutaTemporal =  $foto->getStream()->getMetadata('uri');
-        var_dump($rutaTemporal);
         $nombreImagen = "P" . $idPedido . ".jpg";
         $carpetaDestino = 'db/database/ImagenesDeLosClientes/';
         $rutaDestino = $carpetaDestino . $nombreImagen;

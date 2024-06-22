@@ -33,7 +33,24 @@ class PedidosADO extends AccesoDatos
             return false;
         }
     }
+    public function TraerPedidoPorID($id){
+        //consulta
+        $sql = "SELECT * FROM pedidos WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
 
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
     public function TraerUnoPorCodigo($codigo){
         //consulta
         $sql = "SELECT * FROM pedidos WHERE codigo = :codigo";
@@ -52,33 +69,12 @@ class PedidosADO extends AccesoDatos
             return false;
         }
     }
-
-    public function ObtenerEstadoPorID($id){
-        //consulta
-        $sql = "SELECT estado FROM pedidos WHERE id = :id";
-        //prepara la consulta
-        $stmt = $this->prepararConsulta($sql);
-
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-
-        try {
-            //ejecuta la consulta
-            $stmt->execute();
-            //obtiene los datos de la consulta
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            $result = $result["estado"];
-            return $result;
-        }catch (PDOException $e) {
-            return false;
-        }
-    }
-
     public function ObtenerTiempoRestante($codigo){
         $pedido = $this->TraerUnoPorCodigo($codigo);
         $tiempoDeEsperaEstimado = $pedido["tiempoDeEsperaEstimado"];
-        $estado  = $pedido["estado"];
+        $estado = $pedido["estado"];
         
-        if ($tiempoDeEsperaEstimado != "00:00:00" && $estado != "servido"){ //Si ya esta servido el plato, se deshabilita la opcion de poder ver el tiempo de espera
+        if ($tiempoDeEsperaEstimado != null && $estado != "servido"){ //Si ya esta servido el plato, se deshabilita la opcion de poder ver el tiempo de espera
             $retorno = $tiempoDeEsperaEstimado;
         }else{
             $retorno = false;
@@ -90,8 +86,8 @@ class PedidosADO extends AccesoDatos
     //INSERT
     public function altaPedido($pedido)
     {
-        $sql = "INSERT INTO `pedidos` (`nombreCliente`, `idMesa`, `idMozo`, `estado`, `tiempoDeEsperaEstimado`, `tiempoDeDemora`, `importeFinal`, `horaEntrada`, `codigo`) 
-            VALUES (:nombreCliente, :idMesa, :idMozo, :estado, :tiempoDeEsperaEstimado, :tiempoDeDemora, :importeFinal, :horaEntrada, :codigo)";
+        $sql = "INSERT INTO `pedidos` (`nombreCliente`, `idMesa`, `idMozo`, `estado`, `importeFinal`, `horaEntrada`, `codigo`) 
+            VALUES (:nombreCliente, :idMesa, :idMozo, :estado,  :importeFinal, :horaEntrada, :codigo)";
 
         $stmt = $this->prepararConsulta($sql);
 
@@ -100,8 +96,6 @@ class PedidosADO extends AccesoDatos
         $stmt->bindParam(':idMesa', $pedido->_idMesa);
         $stmt->bindParam(':idMozo',  $pedido->_idMozo);
         $stmt->bindParam(':estado',  $pedido->_estado);
-        $stmt->bindParam(':tiempoDeEsperaEstimado', $pedido->_tiempoEsperaEstimado);
-        $stmt->bindParam(':tiempoDeDemora', $pedido->_tiempoDemora);
         $stmt->bindParam(':importeFinal',  $pedido->_importeFinal);
         $stmt->bindParam(':horaEntrada',  $pedido->_date);
         $stmt->bindParam(':codigo',  $pedido->_codigoAlfanumerico);
@@ -139,6 +133,28 @@ class PedidosADO extends AccesoDatos
         }
     }
 
+    public function ModificarTiempoEstimado($id, $horaEstimada){
+        //consulta
+        $sql = "UPDATE pedidos SET horaEstimada = :horaEstimada WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        $stmt->bindParam(':horaEstimada', $horaEstimada);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public function RelacionarFoto($id, $rutaFoto){
         //consulta
         $sql = "UPDATE pedidos SET foto = :foto WHERE id = :id";
@@ -152,6 +168,29 @@ class PedidosADO extends AccesoDatos
             //ejecuta la consulta
             $stmt->execute();
             //Se fija si hubo cambios en la tabla
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function ActualizarHoraFinal($id){
+        $CURRENT_DATETIME = date("Y-m-d H:i:s");
+        //consulta
+        $sql = "UPDATE pedidos SET horaFinal = :CURRENT_DATETIME WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+        $stmt->bindParam(':CURRENT_DATETIME', $CURRENT_DATETIME);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
             if ($stmt->rowCount() > 0) {
                 return true;
             } else {

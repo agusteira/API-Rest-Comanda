@@ -54,16 +54,14 @@ class MesasADO extends AccesoDatos
     //INSERT
     public function altaMesa($mesa)
     {
-        $sql = "INSERT INTO `mesas` (`codigo`, `estado`, `idPedidoActual`) 
-            VALUES (:codigo, :estado, :idPedidoActual)";
+        $sql = "INSERT INTO `mesas` (`codigo`, `estado`) 
+            VALUES (:codigo, :estado)";
 
         $stmt = $this->prepararConsulta($sql);
 
         // Vincular los valores a los parámetros
         $stmt->bindParam(':codigo', $mesa->_codigo);
         $stmt->bindParam(':estado', $mesa->_estado);
-        $stmt->bindParam(':idPedidoActual', $mesa->_idPedidoActual);
-
 
         // Ejecutar la consulta
         try {
@@ -71,14 +69,12 @@ class MesasADO extends AccesoDatos
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
-            var_dump($e);
             return false;
         }
     }
 
     //UPDATE
     public function cambiarEstadoMesa($idMesa, $estado, $idPedido = null){
-        var_dump($estado);
         if ($estado != "cerrada" && $idPedido == null){
             echo "hola";
             $mesaDelPedido = self::traerUnaMesa($idMesa);
@@ -95,8 +91,6 @@ class MesasADO extends AccesoDatos
         $stmt->bindParam(':idMesa', $idMesa, PDO::PARAM_INT);
 
         try {
-            var_dump($estado);
-            var_dump($idMesa);
             //ejecuta la consulta
             $stmt->execute();
             //obtiene las filas afectadas
