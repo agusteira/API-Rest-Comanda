@@ -3,6 +3,7 @@
 include_once "././db/ADO/PedidosADO.php";
 include_once "././db/ADO/ProductosADO.php";
 include_once "././db/ADO/VentaPedidosADO.php";
+include_once "././db/ADO/EncuestaADO.php";
 
 class Pedido{
     public $_id;
@@ -57,6 +58,12 @@ class Pedido{
             $productoInfo = $datoProductos->obtenerProductoPorNombre($producto["nombre"]);
             $datosVentas->altaVenta($this, $productoInfo, $producto["cantidad"]);
         }
+    }
+
+    public static function Encuesta($codigoMesa, $codigoPedido, $calMesa, $calRestaurante, $calMozo, $calCocinero, $comentarios){
+        $datosEncuesta = EncuestaADO::obtenerInstancia();
+        $data = $datosEncuesta->AltaOpinion($codigoPedido, $calMesa, $calRestaurante, $calMozo, $calCocinero, $comentarios);
+        return $data;
     }
 
     //leer

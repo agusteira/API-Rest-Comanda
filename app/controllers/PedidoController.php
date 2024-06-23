@@ -76,4 +76,26 @@ class PedidoController{
         return $response->withHeader('Content-Type', 'application/json');
     }
 
+    public static function EncuestaPedido($request, $response, $args){
+        $parametros = $request->getParsedBody();
+
+        $codigoMesa = $parametros['codigoMesa'];
+        $codigoPedido = $parametros['codigoPedido'];
+        $calMesa = $parametros['calMesa'];
+        $calRestaurante = $parametros['calRestaurante'];
+        $calMozo = $parametros['calMozo'];
+        $calCocinero = $parametros['calCocinero'];
+        $comentarios = $parametros['comentarios'];
+        
+        if(Pedido::Encuesta($codigoMesa, $codigoPedido, $calMesa, $calRestaurante, $calMozo, $calCocinero, $comentarios) != false){
+            //$tiempoRestante = Pedido::ObtenerTiempoRestante($codigoMesa, $codigoPedido);
+            $payload = json_encode(array("mensaje" => "Opinion emitida correctamente"));
+        }else{
+            $payload = json_encode(array("mensaje" => "NO se pudo emitir la opinion"));
+        }
+
+        
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 }

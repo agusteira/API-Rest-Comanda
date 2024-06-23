@@ -62,8 +62,8 @@ $app->group('/producto', function (RouteCollectorProxy $group) {
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/cliente', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \PedidoController::class . ':VerTiempoRestante');   //Ver tiempo restante
-    //$group->post('[/]', \ProductoController::class . ':AltaProducto');              //Emitir opinion
+    $group->get('[/]', \PedidoController::class . ':VerTiempoRestante'); //Ver tiempo restante
+    $group->post('[/]', \PedidoController::class . ':EncuestaPedido');  //MD-> Comprobar que existe el codigo de pedido y que fue en esa mesa -> comprobar que no exista otra opinion
 
 });
 
