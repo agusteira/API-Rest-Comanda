@@ -23,15 +23,6 @@ $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 
 $app->post('/login', \UserController::class . ':LoginUsuarios');
-/*
-$app->group('/', function (RouteCollectorProxy $group) {
-    $app->post('/login', \UserController::class . ':LoginUsuarios');
-});
-*/
-
-//Ver estado del pedido de parte del cliente
-//Crear comentarios
-
 
 $app->group('/usuario', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UserController::class . ':ListaUsuarios');
@@ -62,9 +53,8 @@ $app->group('/producto', function (RouteCollectorProxy $group) {
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/cliente', function (RouteCollectorProxy $group) {
-    $group->get('[/]', \PedidoController::class . ':VerTiempoRestante'); //Ver tiempo restante
-    $group->post('[/]', \PedidoController::class . ':EncuestaPedido');  //MD-> Comprobar que existe el codigo de pedido y que fue en esa mesa -> comprobar que no exista otra opinion
-
+    $group->get('[/]', \PedidoController::class . ':VerTiempoRestante')->add(\ParamMiddlewares::class . ':VerTiempoRestante');
+    $group->post('[/]', \PedidoController::class . ':EncuestaPedido')->add(\ParamMiddlewares::class . ':VerificarInexisistenciaDeEncuesta')->add(\ParamMiddlewares::class . ':AltaEncuesta');
 });
 
 

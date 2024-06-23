@@ -34,6 +34,24 @@ class EncuestaADO extends AccesoDatos
         }
     }
 
+    public function TraerUnoPorCodigo($codigo){
+        //consulta
+        $sql = "SELECT * FROM encuesta WHERE codigoPedido = :codigo";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        $stmt->bindParam(':codigo', $codigo);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     //INSERT
     public function AltaOpinion($codigoPedido, $calMesa, $calRestaurante, $calMozo, $calCocinero, $comentarios)
     {

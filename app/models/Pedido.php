@@ -59,7 +59,6 @@ class Pedido{
             $datosVentas->altaVenta($this, $productoInfo, $producto["cantidad"]);
         }
     }
-
     public static function Encuesta($codigoMesa, $codigoPedido, $calMesa, $calRestaurante, $calMozo, $calCocinero, $comentarios){
         $datosEncuesta = EncuestaADO::obtenerInstancia();
         $data = $datosEncuesta->AltaOpinion($codigoPedido, $calMesa, $calRestaurante, $calMozo, $calCocinero, $comentarios);
@@ -72,9 +71,19 @@ class Pedido{
         $data = $datos->traerTodosLosPedidos();
         return $data;
     }
+    public static function TraerPedidoPorCodigo($codigo){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerUnoPorCodigo($codigo);
+        return $data;
+    }
     public static function ObtenerTiempoRestante($codigoMesa, $codigoPedido){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->ObtenerTiempoRestante($codigoPedido);
+        return $data;
+    }
+    public static function TraerEncuestaPorCodigo($codigo){
+        $datos = EncuestaADO::obtenerInstancia();
+        $data = $datos->TraerUnoPorCodigo($codigo);
         return $data;
     }
 

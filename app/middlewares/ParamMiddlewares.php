@@ -7,6 +7,7 @@ use Slim\Psr7\Response;
 //Middlewares para verificar parametros
 class ParamMiddlewares
 {
+    //Verificar los tipos de parametros
     public static function VerificarTipoUsuario(Request $request, RequestHandler $handler, $tipoUsuario){
         if ($tipoUsuario === "socio" || $tipoUsuario === "mozo" || $tipoUsuario === "cocinero" 
             || $tipoUsuario === "cervezero" || $tipoUsuario === "bartender")
@@ -30,6 +31,29 @@ class ParamMiddlewares
         return $response;
     }
 
+    public static function VerificarExistenciaDePedido(Request $request, RequestHandler $handler, $codigoPedido){
+        if (Pedido::TraerPedidoPorCodigo($codigoPedido) != false)
+        {
+            $response = $handler->handle($request);
+        }else{
+            $response = new Response();
+            $response->getBody()->write(json_encode(array("error" => "Pedido INEXISTENTE")));
+        }
+        return $response;
+    }
+
+    public static function VerificarInexisistenciaDeEncuesta(Request $request, RequestHandler $handler, $codigoPedido){
+        if (Pedido::TraerEncuestaPorCodigo($codigoPedido) == false)
+        {
+            $response = $handler->handle($request);
+        }else{
+            $response = new Response();
+            $response->getBody()->write(json_encode(array("error" => "Encuesta YA EMITIDA")));
+        }
+        return $response;
+    }
+
+    //Verifcar si existen los parametros
     public static function AltaUsuario(Request $request, RequestHandler $handler){
         $parametros = $request->getParsedBody();
 
@@ -61,6 +85,20 @@ class ParamMiddlewares
 
         if(isset($parametros["tipoProducto"], $parametros["importeProducto"], $parametros["tiempoEstimado"], $parametros["nombre"])){
             $response = $handler->handle($request);
+        } else {
+            $response = new Response();
+            $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));
+        }
+
+        return $response;
+    }
+
+    public static function AltaEncuesta(Request $request, RequestHandler $handler){
+        $parametros = $request->getParsedBody();
+
+        if(isset($parametros["codigoMesa"], $parametros["codigoPedido"], $parametros["calMesa"], $parametros["calRestaurante"],
+                $parametros["calMozo"], $parametros["calCocinero"], $parametros["comentarios"])){
+            $response = self::VerificarExistenciaDePedido($request, $handler, $parametros["codigoPedido"]);
         } else {
             $response = new Response();
             $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));

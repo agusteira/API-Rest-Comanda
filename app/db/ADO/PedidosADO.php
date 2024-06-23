@@ -58,7 +58,6 @@ class PedidosADO extends AccesoDatos
         $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':codigo', $codigo);
-
         try {
             //ejecuta la consulta
             $stmt->execute();
