@@ -76,6 +76,11 @@ class Pedido{
         $data = $datos->TraerUnoPorCodigo($codigo);
         return $data;
     }
+    public static function TraerPedidoPorID($ID){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerPedidoPorID($ID);
+        return $data;
+    }
     public static function ObtenerTiempoRestante($codigoMesa, $codigoPedido){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->ObtenerTiempoRestante($codigoPedido);

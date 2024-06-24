@@ -46,7 +46,7 @@ $app->group('/mesa', function (RouteCollectorProxy $group) {
 
 $app->group('/producto', function (RouteCollectorProxy $group) {
     $group->get('[/]', \ProductoController::class . ':ListaProductos');
-    $group->get('/verProductosPendientes', \ProductoController::class . ':ListaProductosPendientes'); //CREAR MW PARA MEDIANTE SU TOKEN DECIDIR QUE PRODUCTO TIENE PENDIENTES
+    $group->get('/verProductosPendientes', \ProductoController::class . ':ListaProductosPendientes');
     $group->post('[/]', \ProductoController::class . ':AltaProducto')->add(\ParamMiddlewares::class . ':AltaProducto')->add(\AuthMiddleware::class . ':verificarSocio');
     $group->put('/tomarProducto', \ProductoController::class . ':TomarProducto')->add(\ParamMiddlewares::class . ':TomarProducto');
     $group->put('/terminarProducto', \ProductoController::class . ':TerminarProducto')->add(\ParamMiddlewares::class . ':TerminarProducto');

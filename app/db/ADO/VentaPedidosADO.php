@@ -40,12 +40,15 @@ class VentasPedidosADO extends AccesoDatos
     }
 
     public function ObtenerProductosPorSectorYEstado($tipo, $estado){
-        //consulta
-        $sql = "SELECT * FROM ventas WHERE tipoProducto = :tipo AND estado = :estado";
-        //prepara la consulta
-        $stmt = $this->prepararConsulta($sql);
-
-        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        if ($tipo == "socio"){
+            $sql = "SELECT * FROM ventas WHERE estado = :estado";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT * FROM ventas WHERE tipoProducto = :tipo AND estado = :estado";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        }
+        
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
 
         try {

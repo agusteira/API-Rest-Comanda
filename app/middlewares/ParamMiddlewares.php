@@ -31,8 +31,19 @@ class ParamMiddlewares
         return $response;
     }
 
-    public static function VerificarExistenciaDePedido(Request $request, RequestHandler $handler, $codigoPedido){
+    public static function VerificarExistenciaDePedidoPorCodigo(Request $request, RequestHandler $handler, $codigoPedido){
         if (Pedido::TraerPedidoPorCodigo($codigoPedido) != false)
+        {
+            $response = $handler->handle($request);
+        }else{
+            $response = new Response();
+            $response->getBody()->write(json_encode(array("error" => "Pedido INEXISTENTE")));
+        }
+        return $response;
+    }
+
+    public static function VerificarExistenciaDePedidoPorID(Request $request, RequestHandler $handler, $codigoPedido){
+        if (Pedido::TraerPedidoPorID($codigoPedido) != false)
         {
             $response = $handler->handle($request);
         }else{
@@ -98,7 +109,7 @@ class ParamMiddlewares
 
         if(isset($parametros["codigoMesa"], $parametros["codigoPedido"], $parametros["calMesa"], $parametros["calRestaurante"],
                 $parametros["calMozo"], $parametros["calCocinero"], $parametros["comentarios"])){
-            $response = self::VerificarExistenciaDePedido($request, $handler, $parametros["codigoPedido"]);
+            $response = self::VerificarExistenciaDePedidoPorCodigo($request, $handler, $parametros["codigoPedido"]);
         } else {
             $response = new Response();
             $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));
@@ -112,7 +123,7 @@ class ParamMiddlewares
         $uploadedFiles = $request->getUploadedFiles();
 
         if(isset($uploadedFiles["foto"], $parametros["idPedido"])){
-            $response = $handler->handle($request);
+            $response = self::VerificarExistenciaDePedidoPorID($request, $handler, $parametros["codigoPedido"]);
         } else {
             $response = new Response();
             $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));
@@ -177,7 +188,7 @@ class ParamMiddlewares
         $parametros = $request->getQueryParams();
 
         if(isset($parametros["codigoMesa"], $parametros["codigoPedido"])){
-            $response = $handler->handle($request);
+            $response = self::VerificarExistenciaDePedidoPorCodigo($request, $handler, $parametros["codigoPedido"]);
         } else {
             $response = new Response();
             $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));
@@ -185,4 +196,6 @@ class ParamMiddlewares
 
         return $response;
     }
+
+
 }

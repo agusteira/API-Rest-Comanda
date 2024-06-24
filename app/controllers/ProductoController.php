@@ -34,13 +34,33 @@ class ProductoController{
     }
 
     public static function ListaProductosPendientes($request, $response, $args){
-        $parametros = $request->getQueryParams();
+        $dataToken = AutentificadorJWT::ObtenerData($request);
 
-        $tipoProducto = $parametros['tipoProducto'];
+        switch ($dataToken->tipo){
+            case "socio":
+                $tipoProducto = "socio";
+                break;
+            case "cocinero":
+                $tipoProducto = "comidas";
+                break;
+            case "cervezero":
+                $tipoProducto = "cervezas";
+                break;
+            case "bartender":
+                $tipoProducto = "tragos y vinos";
+                break;
+            default:
+                $tipoProducto = false;
+                break;
+        }
         
-        $listaProductosPendientes = PersonalGastronomico::verProductosPendientes($tipoProducto);
+        if ($tipoProducto != false){
+            $listaProductosPendientes = PersonalGastronomico::verProductosPendientes($tipoProducto);
+            $payload = json_encode(array("listaPedidos" => $listaProductosPendientes));
+        }else{
+            $payload = json_encode(array("mensaje" => "Error, usuario no disponible"));
+        }
 
-        $payload = json_encode(array("listaPedidos" => $listaProductosPendientes));
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
