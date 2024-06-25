@@ -80,5 +80,28 @@ class EncuestaADO extends AccesoDatos
             return false;
         }
     }
+    public function InsertarDesdeCSV($producto)
+    {
+        $sql = "INSERT INTO `encuesta`(`codigoPedido`, `mesa`, `restaurante`, `mozo`, `cocina`, `promedio`, `comentarios`)
+            VALUES (:codigoPedido, :mesa, :restaurante, :mozo, :cocina, :promedio, :comentarios)";
+
+        $stmt = $this->prepararConsulta($sql);
+
+        // Vincular los valores a los parámetros
+        $stmt->bindParam(':codigoPedido', $producto["codigoPedido"]);
+        $stmt->bindParam(':mesa', $producto["mesa"]);
+        $stmt->bindParam(':restaurante', $producto["restaurante"]);
+        $stmt->bindParam(':mozo', $producto["mozo"]);
+        $stmt->bindParam(':cocina', $producto["cocina"]);
+        $stmt->bindParam(':promedio', $producto["promedio"]);
+        $stmt->bindParam(':comentarios', $producto["comentarios"]);
+        // Ejecutar la consulta
+        try {
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 
 }

@@ -94,5 +94,28 @@ class ProductosADO extends AccesoDatos
         return $retorno;
     }
     
+    public function InsertarDesdeCSV($producto)
+    {
+        $sql = "INSERT INTO `productos`(`id`, `tipo`, `nombre`, `importe`, `tiempoEstimado`) 
+            VALUES (:id, :tipo, :nombre, :importe, :tiempoEstimado)";
+
+        $stmt = $this->prepararConsulta($sql);
+
+        // Vincular los valores a los parámetros
+        $stmt->bindParam(':id', $producto["id"]);
+        $stmt->bindParam(':tipo', $producto["tipo"]);
+        $stmt->bindParam(':nombre', $producto["nombre"]);
+        $stmt->bindParam(':importe', $producto["importe"]);
+        $stmt->bindParam(':tiempoEstimado', $producto["tiempoEstimado"]);
+
+        // Ejecutar la consulta
+        try {
+            //echo "hola";
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 
 }

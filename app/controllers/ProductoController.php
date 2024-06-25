@@ -1,6 +1,7 @@
 <?php
 
 include_once "models/Productos.php";
+
 include_once "models/users/PersonalGastronomico.php";
 include_once "utils/AutentificadorJWT.php";
 
@@ -25,14 +26,12 @@ class ProductoController{
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
-
     public static function ListaProductos($request, $response, $args){
         $listaProductos = Productos::traerTodo();
         $payload = json_encode(array("listaProductos" => $listaProductos));
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
-
     public static function ListaProductosPendientes($request, $response, $args){
         $dataToken = AutentificadorJWT::ObtenerData($request);
 
@@ -64,7 +63,6 @@ class ProductoController{
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
-
     public static function TomarProducto($request, $response, $args){
         $parametros = $request->getParsedBody();
 
@@ -97,6 +95,29 @@ class ProductoController{
         }
         else{
             $payload = json_encode(array("mensaje" => "El producto NO se pudo crear"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+    public static function DescargarCSV($request, $response, $args){
+        $filePath = Productos::TraerTodoEnCSV(); //Devuelve un csv
+        return $response->withHeader('Content-Type', 'application/csv')
+                        ->withHeader('Content-Disposition', 'attachment; filename="' . "Productos" . "_". date("d-m-Y").".csv" . '"')
+                        ->withHeader('Content-Length', filesize($filePath))
+                        ->withBody(new \Slim\Psr7\Stream(fopen($filePath, 'r')));
+    }
+    public static function CargarCSV($request, $response, $args){
+        $uploadedFiles = $request->getUploadedFiles();
+
+        $archivoCSV = $uploadedFiles["archivo"];
+        $filename = "Productos" . "_" . date("d-m-Y");
+        
+        if(Productos::CargarCSV($archivoCSV, $filename)){
+            $payload = json_encode(array("mensaje" => "BASE DE DATOS ACTUALIZADA"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "NO se han producido CAMBIOS en la BASE DE DATOS"));
         }
 
         $response->getBody()->write($payload);

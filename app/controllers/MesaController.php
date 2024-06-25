@@ -58,4 +58,28 @@ class MesaController{
 
         return $response->withHeader('Content-Type', 'application/json');
     }
+    public static function DescargarCSV($request, $response, $args){
+        $filePath = Mesas::TraerTodoEnCSV(); //Devuelve un csv
+        return $response->withHeader('Content-Type', 'application/csv')
+                        ->withHeader('Content-Disposition', 'attachment; filename="' . "Mesas" . "_". date("d-m-Y").".csv" . '"')
+                        ->withHeader('Content-Length', filesize($filePath))
+                        ->withBody(new \Slim\Psr7\Stream(fopen($filePath, 'r')));
+    }
+
+    public static function CargarCSV($request, $response, $args){
+        $uploadedFiles = $request->getUploadedFiles();
+
+        $archivoCSV = $uploadedFiles["archivo"];
+        $filename = "Mesas" . "_" . date("d-m-Y");
+        
+        if(Mesas::CargarCSV($archivoCSV, $filename)){
+            $payload = json_encode(array("mensaje" => "BASE DE DATOS ACTUALIZADA"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "NO se han producido CAMBIOS en la BASE DE DATOS"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 }

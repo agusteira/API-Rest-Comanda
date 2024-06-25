@@ -1,6 +1,7 @@
 <?php
 
 include_once "././db/ADO/ProductosADO.php";
+include_once "models/Pedido.php";
 
 class Productos{
     public $_tipo;
@@ -26,5 +27,20 @@ class Productos{
         $data = $datos->traerTodosLosProductos();
         return $data;
     }
-
+    public static function TraerTodoEnCSV(){
+        $data = self::traerTodo();
+        $filename = "Productos" . "_". date("d-m-Y").".csv";
+        return Pedido::GenerarCSV($filename, $data);
+    }
+    public static function CargarCSV($ArchivoCSV, $filename){
+        $productos = Pedido::ConvertirCSVenArray($ArchivoCSV, $filename);
+        $datos = ProductosADO::obtenerInstancia();
+        $retorno = false;
+        foreach ($productos as $producto){
+            if($datos->InsertarDesdeCSV($producto)){
+                $retorno = true;
+            }
+        }
+        return $retorno;
+    }
 }

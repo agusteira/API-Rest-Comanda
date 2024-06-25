@@ -20,6 +20,21 @@ class VentasPedidosADO extends AccesoDatos
 
 
     //SELECT
+    public function TraerTodasLasVentas(){
+        //consulta
+        $sql = "SELECT * FROM ventas";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
     public function ObtenerTodosLosProductosDeUnPedido($idPedido){
         //consulta
         $sql = "SELECT * FROM ventas WHERE idPedido = :idPedido";
@@ -107,6 +122,32 @@ class VentasPedidosADO extends AccesoDatos
             $retorno = false;
         }
         return $retorno;
+    }
+
+    public function InsertarDesdeCSV($producto)
+    {
+        $sql = "INSERT INTO `ventas`(`id`, `idPedido`, `idProducto`, `cantidad`, `tipoProducto`, `tiempoEstimado`, `estado`, `horaListaParaServirEstimada`)
+            VALUES (:id, :idPedido, :idProducto, :cantidad, :tipoProducto, :tiempoEstimado, :estado, :horaListaParaServirEstimada)";
+
+        $stmt = $this->prepararConsulta($sql);
+
+        // Vincular los valores a los parámetros
+        $stmt->bindParam(':id', $producto["id"]);
+        $stmt->bindParam(':idPedido', $producto["idPedido"]);
+        $stmt->bindParam(':idProducto', $producto["idProducto"]);
+        $stmt->bindParam(':cantidad', $producto["cantidad"]);
+        $stmt->bindParam(':tipoProducto', $producto["tipoProducto"]);
+        $stmt->bindParam(':tiempoEstimado', $producto["tiempoEstimado"]);
+        $stmt->bindParam(':estado', $producto["estado"]);
+        $stmt->bindParam(':horaListaParaServirEstimada', $producto["horaListaParaServirEstimada"]);
+
+        // Ejecutar la consulta
+        try {
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 
     //UPDATE

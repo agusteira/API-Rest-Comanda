@@ -197,5 +197,16 @@ class ParamMiddlewares
         return $response;
     }
 
+    public static function AltaCSV(Request $request, RequestHandler $handler){
+        $uploadedFiles = $request->getUploadedFiles();
 
+        if(isset($uploadedFiles["archivo"])){
+            $response = $handler->handle($request);
+        } else {
+            $response = new Response();
+            $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));
+        }
+
+        return $response;
+    }
 }

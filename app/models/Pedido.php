@@ -65,11 +65,27 @@ class Pedido{
         return $data;
     }
 
+    public static function CargarCSV($ArchivoCSV, $filename){
+        $pedidos = Pedido::ConvertirCSVenArray($ArchivoCSV, $filename);
+        $datos = PedidosADO::obtenerInstancia();
+        $retorno = false;
+        foreach ($pedidos as $pedido){
+            if($datos->InsertarDesdeCSV($pedido)){
+                $retorno = true;
+            }
+        }
+        return $retorno;
+    }
     //leer
     public static function traerTodo(){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->traerTodosLosPedidos();
         return $data;
+    }
+    public static function TraerTodoEnCSV(){
+        $data = self::traerTodo();
+        $filename = "Pedidos" . "_". date("d-m-Y").".csv";
+        return self::GenerarCSV($filename, $data);
     }
     public static function TraerPedidoPorCodigo($codigo){
         $datos = PedidosADO::obtenerInstancia();
@@ -86,12 +102,7 @@ class Pedido{
         $data = $datos->ObtenerTiempoRestante($codigoPedido);
         return $data;
     }
-    public static function TraerEncuestaPorCodigo($codigo){
-        $datos = EncuestaADO::obtenerInstancia();
-        $data = $datos->TraerUnoPorCodigo($codigo);
-        return $data;
-    }
-
+    
     //Modificar
     public static function RelacionarFoto($idPedido, $foto){
         $datos = PedidosADO::obtenerInstancia();
@@ -108,7 +119,6 @@ class Pedido{
         }
         return $retorno;
     }
-
     //Otras funciones
     public function calcularImporteFinal($productos){
         $importe = 0;
@@ -134,6 +144,91 @@ class Pedido{
         $datosPedido = PedidosADO::obtenerInstancia();
         $data = $datosPedido->obtenerUltimoId();
         $this->_id = $data;
+    }
+
+    public static function GenerarCSV($filename, $data){
+        $filePath = "csv/descargados/" . $filename;
+
+        $file = fopen($filePath, "w");
+
+        fputcsv($file, array_keys($data[0]));
+        foreach($data as $pedido){
+            fputcsv($file, $pedido);
+        }
+        fclose($file);
+
+        return $filePath;
+    }
+
+    public static function ConvertirCSVenArray($ArchivoCSV, $filename){
+        $rutaTemporal =  $ArchivoCSV->getStream()->getMetadata('uri');
+        $nombreArchivo = $filename . ".csv";
+        $carpetaDestino = "csv/cargados/";
+        
+        move_uploaded_file($rutaTemporal, $carpetaDestino . $nombreArchivo);
+        if (($handle = fopen($carpetaDestino . $nombreArchivo, "r")) !== FALSE) {
+            $headers = fgetcsv($handle);
+            // Leer el resto del archivo
+            while (($row = fgetcsv($handle)) !== FALSE) {
+                // Combinar los encabezados con los datos de la fila
+                $csvData[] = array_combine($headers, $row);
+            }
+            fclose($handle);
+        }
+        return $csvData;
+    }
+
+        //Encuesta
+    public static function TraerEncuestaPorCodigo($codigo){
+        $datos = EncuestaADO::obtenerInstancia();
+        $data = $datos->TraerUnoPorCodigo($codigo);
+        return $data;
+    }
+    public static function TraerEncuestas(){
+        $datos = EncuestaADO::obtenerInstancia();
+        $data = $datos->traerTodasLasEncuestas();
+        return $data;
+    }
+    public static function TraerEncuestaEnCSV(){
+        $data = self::TraerEncuestas();
+        $filename = "Encuestas" . "_". date("d-m-Y").".csv";
+        return self::GenerarCSV($filename, $data);
+    }
+
+    public static function CargarEncuestasCSV($ArchivoCSV, $filename){
+        $encuestas = Pedido::ConvertirCSVenArray($ArchivoCSV, $filename);
+        $datos = EncuestaADO::obtenerInstancia();
+        $retorno = false;
+        foreach ($encuestas as $encuesta){
+            if($datos->InsertarDesdeCSV($encuesta)){
+                $retorno = true;
+            }
+        }
+        return $retorno;
+    }
+    
+        //Ventas
+    public static function TraerVentas(){
+        $datos = VentasPedidosADO::obtenerInstancia();
+        $data = $datos->TraerTodasLasVentas();
+        return $data;
+    }
+    public static function TraerVentasEnCSV(){
+        $data = self::TraerVentas();
+        $filename = "Ventas" . "_". date("d-m-Y").".csv";
+        return self::GenerarCSV($filename, $data);
+    }
+
+    public static function CargarVentasCSV($ArchivoCSV, $filename){
+        $ventas = Pedido::ConvertirCSVenArray($ArchivoCSV, $filename);
+        $datos = VentasPedidosADO::obtenerInstancia();
+        $retorno = false;
+        foreach ($ventas as $venta){
+            if($datos->InsertarDesdeCSV($venta)){
+                $retorno = true;
+            }
+        }
+        return $retorno;
     }
 
 

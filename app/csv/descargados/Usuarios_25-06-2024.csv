@@ -1,0 +1,5 @@
+id,tipo,fechaEntrada,cantOperaciones,estado,nombre,clave
+1,socio,"2024-06-25 06:53:41",15,activo,admin,admin
+2,mozo,"2024-06-25 06:54:47",4,activo,fabrizio,clavegenerica1
+3,cocinero,"2024-06-25 06:55:25",7,suspendido,agustin,quemiras
+4,socio,"2024-06-25 06:56:20",2,activo,zoe,2512

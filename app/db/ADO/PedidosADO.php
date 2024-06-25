@@ -108,6 +108,36 @@ class PedidosADO extends AccesoDatos
         }
         return $retorno;
     }
+    public function InsertarDesdeCSV($producto)
+    {
+        $sql = "INSERT INTO `pedidos`(`id`, `codigo`, `nombreCliente`, `idMesa`, `idMozo`, `estado`, `importeFinal`, `horaEntrada`, `horaEstimada`, `horaFinal`, `foto`, `tiempoDemora`, `tiempoDeEsperaEstimado`)
+            VALUES (:id, :codigo, :nombreCliente, :idMesa, :idMozo, :estado, :importeFinal, :horaEntrada, :horaEstimada, :horaFinal ,:foto, :tiempoDemora, :tiempoDeEsperaEstimado)";
+
+        $stmt = $this->prepararConsulta($sql);
+
+        // Vincular los valores a los parámetros
+        $stmt->bindParam(':id', $producto["id"]);
+        $stmt->bindParam(':codigo', $producto["codigo"]);
+        $stmt->bindParam(':nombreCliente', $producto["nombreCliente"]);
+        $stmt->bindParam(':idMesa', $producto["idMesa"]);
+        $stmt->bindParam(':idMozo', $producto["idMozo"]);
+        $stmt->bindParam(':estado', $producto["estado"]);
+        $stmt->bindParam(':importeFinal', $producto["importeFinal"]);
+        $stmt->bindParam(':horaEntrada', $producto["horaEntrada"]);
+        $stmt->bindParam(':horaEstimada', $producto["horaEstimada"]);
+        $stmt->bindParam(':horaFinal', $producto["horaFinal"]);
+        $stmt->bindParam(':foto', $producto["foto"]);
+        $stmt->bindParam(':tiempoDemora', $producto["tiempoDemora"]);
+        $stmt->bindParam(':tiempoDeEsperaEstimado', $producto["tiempoDeEsperaEstimado"]);
+
+        // Ejecutar la consulta
+        try {
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 
     //UPDATE
     public function ModificarEstadoPorID($id, $estado){

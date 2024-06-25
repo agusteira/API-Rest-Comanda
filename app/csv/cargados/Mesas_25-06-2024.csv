@@ -1,0 +1,13 @@
+id,idPedido,idProducto,cantidad,tipoProducto,tiempoEstimado,estado,horaListaParaServirEstimada
+1,43,4,1,comidas,00:01:32,"listo para servir","2024-06-23 01:25:19"
+2,43,2,2,comidas,00:31:32,"listo para servir","2024-06-23 01:56:22"
+3,43,5,1,cervezas,00:00:45,"listo para servir","2024-06-23 01:26:14"
+4,43,6,1,"tragos y vinos",00:17:45,"listo para servir","2024-06-23 01:43:34"
+5,44,4,1,comidas,00:00:00,pendiente,"0000-00-00 00:00:00"
+6,44,2,2,comidas,00:00:00,pendiente,"0000-00-00 00:00:00"
+7,44,5,1,cervezas,00:00:00,pendiente,"0000-00-00 00:00:00"
+8,44,6,1,"tragos y vinos",00:00:00,pendiente,"0000-00-00 00:00:00"
+9,45,4,1,comidas,00:00:00,pendiente,"0000-00-00 00:00:00"
+10,45,2,2,comidas,00:00:00,pendiente,"0000-00-00 00:00:00"
+11,45,5,1,cervezas,00:00:00,pendiente,"0000-00-00 00:00:00"
+12,45,6,1,"tragos y vinos",00:00:00,pendiente,"0000-00-00 00:00:00"

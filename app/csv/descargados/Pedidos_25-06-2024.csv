@@ -1,0 +1,4 @@
+id,codigo,nombreCliente,idMesa,idMozo,estado,importeFinal,horaEntrada,horaEstimada,horaFinal,foto,tiempoDemora,tiempoDeEsperaEstimado
+43,78OLY,prueba1,2,1,"listo para servir",106,"2024-06-23 01:08:21","2024-06-23 01:56:22","2024-06-23 01:25:49",db/database/ImagenesDeLosClientes/P43.jpg,00:17:28,00:48:01
+44,L6W7R,prueba1,2,1,pendiente,106,"2024-06-24 22:04:43",,,,,
+45,4DQ89,prueba1,2,1,pendiente,106,"2024-06-25 02:23:14",,,,,

@@ -73,6 +73,28 @@ class MesasADO extends AccesoDatos
         }
     }
 
+    public function InsertarDesdeCSV($mesa)
+    {
+        $sql = "INSERT INTO `mesas` (`id`, `codigo`, `estado`, `idPedidoActual`) 
+            VALUES (:id, :codigo, :estado, :idPedidoActual)";
+
+        $stmt = $this->prepararConsulta($sql);
+
+        // Vincular los valores a los parámetros
+        $stmt->bindParam(':id', $mesa["id"]);
+        $stmt->bindParam(':codigo', $mesa["codigo"]);
+        $stmt->bindParam(':estado', $mesa["estado"]);
+        $stmt->bindParam(':idPedidoActual', $mesa["idPedidoActual"]);
+
+        // Ejecutar la consulta
+        try {
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     //UPDATE
     public function cambiarEstadoMesa($idMesa, $estado, $idPedido = null){
         if ($estado != "cerrada" && $idPedido == null){

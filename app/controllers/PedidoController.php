@@ -98,4 +98,79 @@ class PedidoController{
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
+
+    public static function DescargarCSV($request, $response, $args){
+        $filePath = Pedido::TraerTodoEnCSV(); //Devuelve un csv
+        return $response->withHeader('Content-Type', 'application/csv')
+                        ->withHeader('Content-Disposition', 'attachment; filename="' . "Pedidos" . "_". date("d-m-Y").".csv" . '"')
+                        ->withHeader('Content-Length', filesize($filePath))
+                        ->withBody(new \Slim\Psr7\Stream(fopen($filePath, 'r')));
+    }
+
+    public static function DescargarVentasCSV($request, $response, $args){
+        $filePath = Pedido::TraerVentasEnCSV(); //Devuelve un csv
+        return $response->withHeader('Content-Type', 'application/csv')
+                        ->withHeader('Content-Disposition', 'attachment; filename="' . "Ventas" . "_". date("d-m-Y").".csv" . '"')
+                        ->withHeader('Content-Length', filesize($filePath))
+                        ->withBody(new \Slim\Psr7\Stream(fopen($filePath, 'r')));
+    }
+
+    public static function DescargarEncuestaCSV($request, $response, $args){
+        $filePath = Pedido::TraerEncuestaEnCSV(); //Devuelve un csv
+        return $response->withHeader('Content-Type', 'application/csv')
+                        ->withHeader('Content-Disposition', 'attachment; filename="' . "Encuestas" . "_". date("d-m-Y").".csv" . '"')
+                        ->withHeader('Content-Length', filesize($filePath))
+                        ->withBody(new \Slim\Psr7\Stream(fopen($filePath, 'r')));
+    }
+
+    public static function CargarCSV($request, $response, $args){
+        $uploadedFiles = $request->getUploadedFiles();
+
+        $archivoCSV = $uploadedFiles["archivo"];
+        $filename = "Pedidos" . "_" . date("d-m-Y");
+        
+        if(Pedido::CargarCSV($archivoCSV, $filename)){
+            $payload = json_encode(array("mensaje" => "BASE DE DATOS ACTUALIZADA"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "NO se han producido CAMBIOS en la BASE DE DATOS"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function CargarVentasCSV($request, $response, $args){
+        $uploadedFiles = $request->getUploadedFiles();
+
+        $archivoCSV = $uploadedFiles["archivo"];
+        $filename = "Ventas" . "_" . date("d-m-Y");
+        
+        if(Pedido::CargarVentasCSV($archivoCSV, $filename)){
+            $payload = json_encode(array("mensaje" => "BASE DE DATOS ACTUALIZADA"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "NO se han producido CAMBIOS en la BASE DE DATOS"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function CargarEncuestasCSV($request, $response, $args){
+        $uploadedFiles = $request->getUploadedFiles();
+
+        $archivoCSV = $uploadedFiles["archivo"];
+        $filename = "Encuestas" . "_" . date("d-m-Y");
+        echo "hola";
+        if(Pedido::CargarEncuestasCSV($archivoCSV, $filename)){
+            $payload = json_encode(array("mensaje" => "BASE DE DATOS ACTUALIZADA"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "NO se han producido CAMBIOS en la BASE DE DATOS"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 }

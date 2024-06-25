@@ -40,6 +40,12 @@ class User {
         return $data;
     }
 
+    public static function TraerTodoEnCSV(){
+        $data = self::traerTodosLosUsuarios();
+        $filename = "Usuarios" . "_". date("d-m-Y").".csv";
+        return Pedido::GenerarCSV($filename, $data);
+    }
+
     public function cambiarEstadoPedido($estado, $idPedido){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->ModificarEstadoPorID($idPedido, $estado);
@@ -72,5 +78,17 @@ class User {
         return $user;
         */
     }
+    public static function CargarCSV($ArchivoCSV, $filename){
+        $usuarios = Pedido::ConvertirCSVenArray($ArchivoCSV, $filename);
+        $datos = UsersADO::obtenerInstancia();
+        $retorno = false;
+        foreach ($usuarios as $usuario){
+            if($datos->InsertarDesdeCSV($usuario)){
+                $retorno = true;
+            }
+        }
+        return $retorno;
+    }
+
 
 }

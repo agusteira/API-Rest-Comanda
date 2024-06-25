@@ -80,6 +80,30 @@ class UsersADO extends AccesoDatos
             return false;
         }
     }
+    public function InsertarDesdeCSV($producto)
+    {
+        $sql = "INSERT INTO `user`(`id`, `tipo`, `fechaEntrada`, `cantOperaciones`, `estado`, `nombre`, `clave`) 
+            VALUES (:id, :tipo, :fechaEntrada, :cantOperaciones, :estado, :nombre, :clave)";
+
+        $stmt = $this->prepararConsulta($sql);
+
+        // Vincular los valores a los parámetros
+        $stmt->bindParam(':id', $producto["id"]);
+        $stmt->bindParam(':tipo', $producto["tipo"]);
+        $stmt->bindParam(':fechaEntrada', $producto["fechaEntrada"]);
+        $stmt->bindParam(':cantOperaciones', $producto["cantOperaciones"]);
+        $stmt->bindParam(':estado', $producto["estado"]);
+        $stmt->bindParam(':nombre', $producto["nombre"]);
+        $stmt->bindParam(':clave', $producto["clave"]);
+
+        // Ejecutar la consulta
+        try {
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 
     //UPDATE
     public function suspenderUsuario($IDuser, $estado = "suspendido"){
@@ -126,7 +150,6 @@ class UsersADO extends AccesoDatos
             return false;
         }
     }
-
     public function SumarOperacion($IDuser){
         //consulta
         $sql = "UPDATE user SET cantOperaciones = cantOperaciones + 1 WHERE id = :id";

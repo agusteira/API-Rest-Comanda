@@ -57,10 +57,29 @@ $app->group('/cliente', function (RouteCollectorProxy $group) {
     $group->post('[/]', \PedidoController::class . ':EncuestaPedido')->add(\ParamMiddlewares::class . ':VerificarInexisistenciaDeEncuesta')->add(\ParamMiddlewares::class . ':AltaEncuesta');
 });
 
+$app->group('/archivos', function (RouteCollectorProxy $group) {
+    $group->get('/pedidos', \PedidoController::class . ':DescargarCSV'); 
+    $group->get('/ventas', \PedidoController::class . ':DescargarVentasCSV'); 
+    $group->get('/encuestas', \PedidoController::class . ':DescargarEncuestaCSV'); 
+    $group->get('/productos', \ProductoController::class . ':DescargarCSV'); 
+    $group->get('/mesas', \MesaController::class . ':DescargarCSV'); 
+    $group->get('/usuarios', \UserController::class . ':DescargarCSV'); 
+
+    $group->post('/pedidos', \PedidoController::class . ':CargarCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
+    $group->post('/ventas', \PedidoController::class . ':CargarVentasCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
+    $group->post('/encuestas', \PedidoController::class . ':CargarEncuestasCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
+    $group->post('/productos', \ProductoController::class . ':CargarCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
+    $group->post('/mesas', \MesaController::class . ':CargarCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
+    $group->post('/usuarios', \UserController::class . ':CargarCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
+});
+
 
 $app->run();
 
 // php -S localhost:666 -t app (para prender el servidor)
+
+//CSV
+//PDF -> Descarga las estadisticas
 
 /*
 [{"nombre":"milanesa a caballo", "cantidad": 1}, {"nombre":"hamburguesa de garbanzo", "cantidad": 2}, {"nombre":"corona", "cantidad": 1}, {"nombre":"daikiri", "cantidad": 1}]
