@@ -53,4 +53,73 @@ class Mesas{
         return $retorno;
     }
 
+    public static function ObtenerMayorImporte($fecha1, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerPedidoMayorImporte($fecha1, $fecha2);
+        return $data;
+    }
+
+    public static function ObtenerMenorImporte($fecha1, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerPedidoMenorImporte($fecha1, $fecha2);
+        return $data;
+    }
+
+    public static function ObtenerMejoresComentarios(){
+        $datosMesas = EncuestaADO::obtenerInstancia();
+        $datosPedidos = PedidosADO::obtenerInstancia();
+        $dataMesa = $datosMesas->TraerMejoresComentariosMesa();
+        $pedido = $datosPedidos->TraerUnoPorCodigo( $dataMesa["codigoPedido"]);
+
+        $retorno = array(
+            "idMesa" => $pedido["idMesa"],
+            "puntuacion" => $dataMesa["mesa"],
+            "comentarios" => $dataMesa["comentarios"]
+        );
+        return $retorno;
+    }
+
+    public static function ObtenerPeoresComentarios(){
+        $datosMesas = EncuestaADO::obtenerInstancia();
+        $datosPedidos = PedidosADO::obtenerInstancia();
+        $dataMesa = $datosMesas->TraerPeoresComentariosMesa();
+        $pedido = $datosPedidos->TraerUnoPorCodigo( $dataMesa["codigoPedido"]);
+
+        $retorno = array(
+            "idMesa" => $pedido["idMesa"],
+            "puntuacion" => $dataMesa["mesa"],
+            "comentarios" => $dataMesa["comentarios"]
+        );
+        return $retorno;
+    }
+
+    public static function ObtenerFacturacion($idMesa,$fecha1= null, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerFacturacionDeMesa($idMesa, $fecha1, $fecha2);
+        return $data[0];
+    }
+
+    public static function ObtenerMesaMasUsada($fecha1, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerMesaMasUsada($fecha1, $fecha2);
+        return $data;
+    }
+
+    public static function ObtenerMesaMenosUsada($fecha1, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerMesaMenosUsada($fecha1, $fecha2);
+        return $data;
+    }
+
+    public static function ObtenerMesaMasFacturo($fecha1, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerMesaMasFacturo($fecha1, $fecha2);
+        return $data;
+    }
+
+    public static function ObtenerMesaMenosFacturo($fecha1, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerMesaMenosFacturo($fecha1, $fecha2);
+        return $data;
+    }
 }

@@ -87,15 +87,15 @@ $app->group('/estadisticas', function (RouteCollectorProxy $group) {
         $subGroup->get('/cancelados', \PedidoController::class . ':ObtenerCancelados');
     });
     $group->group('/mesas', function (RouteCollectorProxy $subGroup){
-        $subGroup->get('/masUsada', \MesaController::class . ':ObtenerMasUsada'); # masomenos
-        $subGroup->get('/menosUsada', \MesaController::class . ':ObtenerMenosUsada'); # masomenos
-        $subGroup->get('/masFacturo', \MesaController::class . ':ObtenerMasFacturo'); # dificil
-        $subGroup->get('/menosFacturo', \MesaController::class . ':ObtenerMenosFacturo'); # dificil
-        $subGroup->get('/mayorImporte', \MesaController::class . ':ObtenerMayorImporte'); #facil
-        $subGroup->get('/menorImporte', \MesaController::class . ':ObtenerMenorImporte'); #facil
-        $subGroup->get('/facturacionEntreFechas', \MesaController::class . ':ObtenerFacturacionEntreFechas'); # dificil
-        $subGroup->get('/mejoresComentarios', \MesaController::class . ':ObtenerMejoresComentarios'); #muy facil
-        $subGroup->get('/peoresComentarios', \MesaController::class . ':ObtenerPeoresComentarios'); #muy facil
+        $subGroup->get('/masUsada', \MesaController::class . ':ObtenerMesaMasUsada');
+        $subGroup->get('/menosUsada', \MesaController::class . ':ObtenerMesaMenosUsada');
+        $subGroup->get('/masFacturo', \MesaController::class . ':ObtenerMesaMasFacturo');
+        $subGroup->get('/menosFacturo', \MesaController::class . ':ObtenerMesaMenosFacturo');
+        $subGroup->get('/mayorImporte', \MesaController::class . ':ObtenerMayorImporte');
+        $subGroup->get('/menorImporte', \MesaController::class . ':ObtenerMenorImporte');
+        $subGroup->get('/facturacionEntreFechas/{idMesa}', \MesaController::class . ':ObtenerFacturacion');
+        $subGroup->get('/mejoresComentarios', \MesaController::class . ':ObtenerMejoresComentarios');
+        $subGroup->get('/peoresComentarios', \MesaController::class . ':ObtenerPeoresComentarios');
     });
     
 });//->add(\AuthMiddleware::class . ':verificarSocio')->add(\AuthMiddleware::class . ':verificarToken');

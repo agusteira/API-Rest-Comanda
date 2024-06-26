@@ -52,6 +52,44 @@ class EncuestaADO extends AccesoDatos
         }
     }
 
+    public function TraerMejoresComentariosMesa(){
+        //consulta
+        $sql = "SELECT codigoPedido, comentarios, mesa FROM encuesta WHERE (SELECT MAX(mesa) FROM encuesta)";
+        $stmt = $this->prepararConsulta($sql);
+
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerPeoresComentariosMesa(){
+        //consulta
+        $sql = "SELECT codigoPedido, comentarios, mesa FROM encuesta WHERE (SELECT MIN(mesa) FROM encuesta)";
+        $stmt = $this->prepararConsulta($sql);
+
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     //INSERT
     public function AltaOpinion($codigoPedido, $calMesa, $calRestaurante, $calMozo, $calCocinero, $comentarios)
     {

@@ -102,13 +102,11 @@ class Pedido{
         $data = $datos->ObtenerTiempoRestante($codigoPedido);
         return $data;
     }
-
     public static function ObtenerDemorados($fecha1, $fecha2 = null){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->TraerDemorados($fecha1, $fecha2);
         return $data;
     }
-
     public static function ObtenerCancelados($fecha1, $fecha2 = null){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->TraerCancelados($fecha1, $fecha2);

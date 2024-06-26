@@ -81,7 +81,6 @@ class PedidosADO extends AccesoDatos
 
         return $retorno;
     }
-
     public function TraerDemorados($fecha1, $fecha2){
         //consulta
         if ($fecha2 == null){
@@ -108,7 +107,6 @@ class PedidosADO extends AccesoDatos
             return false;
         }
     }
-
     public function TraerCancelados($fecha1, $fecha2){
         //consulta
         if ($fecha2 == null){
@@ -134,6 +132,174 @@ class PedidosADO extends AccesoDatos
             return false;
         }
     }
+
+    public function TraerPedidoMayorImporte($fecha1, $fecha2){
+        //consulta
+        if ($fecha2 == null){
+            $sql = "SELECT id, idMesa, importeFinal FROM pedidos WHERE importeFinal = (SELECT MAX(importeFinal) FROM pedidos) AND DATE(horaEntrada) = ?";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT id, idMesa, importeFinal FROM pedidos WHERE importeFinal = (SELECT MAX(importeFinal) FROM pedidos) AND DATE(horaEntrada) BETWEEN ? AND ?";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerPedidoMenorImporte($fecha1, $fecha2){
+        //consulta
+        if ($fecha2 == null){
+            $sql = "SELECT id, idMesa, importeFinal FROM pedidos WHERE importeFinal = (SELECT MIN(importeFinal) FROM pedidos) AND DATE(horaEntrada) = ?";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT id, idMesa, importeFinal FROM pedidos WHERE importeFinal = (SELECT MIN(importeFinal) FROM pedidos) AND DATE(horaEntrada) BETWEEN ? AND ?";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerFacturacionDeMesa($idMesa, $fecha1, $fecha2){
+        //consulta
+        if ($fecha1 == null || $fecha2 == null){
+            $sql = "SELECT idMesa, SUM(importeFinal) as facturacion FROM pedidos WHERE idMesa = ?";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT idMesa, SUM(importeFinal) as facturacion FROM pedidos WHERE idMesa = ? AND DATE(horaEntrada) BETWEEN ? AND ?";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha1);
+            $stmt->bindParam(3, $fecha2);
+        }
+        $stmt->bindParam(1, $idMesa);
+        //prepara la consulta
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerMesaMasUsada($fecha1, $fecha2){
+        if ($fecha2 == null){
+            $sql = "SELECT idMesa, COUNT(*) as cantidad FROM pedidos WHERE DATE(horaEntrada) = ? GROUP BY idMesa ORDER BY cantidad DESC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT idMesa, COUNT(*) as cantidad FROM pedidos WHERE DATE(horaEntrada) BETWEEN ? AND ? GROUP BY idMesa ORDER BY cantidad DESC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerMesaMenosUsada($fecha1, $fecha2){
+        if ($fecha2 == null){
+            $sql = "SELECT idMesa, COUNT(*) as cantidad FROM pedidos WHERE DATE(horaEntrada) = ? GROUP BY idMesa ORDER BY cantidad ASC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT idMesa, COUNT(*) as cantidad FROM pedidos WHERE DATE(horaEntrada) BETWEEN ? AND ? GROUP BY idMesa ORDER BY cantidad ASC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerMesaMasFacturo($fecha1, $fecha2){
+        if ($fecha2 == null){
+            $sql = "SELECT idMesa, SUM(importeFinal) as facturacion FROM pedidos WHERE DATE(horaEntrada) = ? GROUP BY idMesa ORDER BY facturacion DESC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT idMesa, SUM(importeFinal) as facturacion FROM pedidos WHERE DATE(horaEntrada) BETWEEN ? AND ? GROUP BY idMesa ORDER BY facturacion DESC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerMesaMenosFacturo($fecha1, $fecha2){
+        if ($fecha2 == null){
+            $sql = "SELECT idMesa, SUM(importeFinal) as facturacion FROM pedidos WHERE DATE(horaEntrada) = ? GROUP BY idMesa ORDER BY facturacion ASC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT idMesa, SUM(importeFinal) as facturacion FROM pedidos WHERE DATE(horaEntrada) BETWEEN ? AND ? GROUP BY idMesa ORDER BY facturacion ASC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
 
     //INSERT
     public function altaPedido($pedido)
