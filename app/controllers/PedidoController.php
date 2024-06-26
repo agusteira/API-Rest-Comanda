@@ -173,4 +173,72 @@ class PedidoController{
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
+
+    public static function ObtenerMasVendido($request, $response, $args){
+        $parametros = $request->getQueryParams();
+        
+        $fecha1 = $parametros['fecha1'];
+
+        if (isset($parametros['fecha2'])){
+            $fecha2 = $parametros['fecha2'];
+            $productoMasVendido = Pedido::ObtenerMasVendido($fecha1, $fecha2);
+        }else{
+            $productoMasVendido = Pedido::ObtenerMasVendido($fecha1);
+        }
+
+        $payload = json_encode(array("productoMasVendido" => $productoMasVendido));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function ObtenerMenosVendido($request, $response, $args){
+        $parametros = $request->getQueryParams();
+        
+        $fecha1 = $parametros['fecha1'];
+
+        if (isset($parametros['fecha2'])){
+            $fecha2 = $parametros['fecha2'];
+            $productoMenosVendido = Pedido::ObtenerMenosVendido($fecha1, $fecha2);
+        }else{
+            $productoMenosVendido = Pedido::ObtenerMenosVendido($fecha1);
+        }
+
+        $payload = json_encode(array("productoMenosVendido" => $productoMenosVendido));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function ObtenerDemorados($request, $response, $args){
+        $parametros = $request->getQueryParams();
+        
+        $fecha1 = $parametros['fecha1'];
+
+        if (isset($parametros['fecha2'])){
+            $fecha2 = $parametros['fecha2'];
+            $pedidosDemorados = Pedido::ObtenerDemorados($fecha1, $fecha2);
+        }else{
+            $pedidosDemorados = Pedido::ObtenerDemorados($fecha1);
+        }
+
+        $payload = json_encode(array("pedidosDemorados" => $pedidosDemorados));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function ObtenerCancelados($request, $response, $args){
+        $parametros = $request->getQueryParams();
+        
+        $fecha1 = $parametros['fecha1'];
+
+        if (isset($parametros['fecha2'])){
+            $fecha2 = $parametros['fecha2'];
+            $pedidosCancelados = Pedido::ObtenerCancelados($fecha1, $fecha2);
+        }else{
+            $pedidosCancelados = Pedido::ObtenerCancelados($fecha1);
+        }
+
+        $payload = json_encode(array("pedidosCancelados" => $pedidosCancelados));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 }

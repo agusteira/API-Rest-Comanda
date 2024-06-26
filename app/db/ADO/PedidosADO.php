@@ -82,6 +82,59 @@ class PedidosADO extends AccesoDatos
         return $retorno;
     }
 
+    public function TraerDemorados($fecha1, $fecha2){
+        //consulta
+        if ($fecha2 == null){
+            $sql = "SELECT id, codigo FROM pedidos WHERE horaEstimada < horaFinal AND DATE(horaEntrada) = ?";
+            $stmt = $this->prepararConsulta($sql);
+            
+        }else{
+            $sql = "SELECT id, codigo FROM pedidos WHERE horaEstimada < horaFinal AND DATE(horaEntrada) BETWEEN ? AND ?";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+            echo "hola";
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerCancelados($fecha1, $fecha2){
+        //consulta
+        if ($fecha2 == null){
+            $sql = "SELECT id, codigo FROM pedidos WHERE cancelado = true AND DATE(horaEntrada) = ?";
+            $stmt = $this->prepararConsulta($sql);
+            
+        }else{
+            $sql = "SELECT id, codigo FROM pedidos WHERE cancelado = true AND DATE(horaEntrada) BETWEEN ? AND ?";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        
+        try {
+            
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     //INSERT
     public function altaPedido($pedido)
     {

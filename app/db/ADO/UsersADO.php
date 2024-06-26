@@ -56,6 +56,82 @@ class UsersADO extends AccesoDatos
         }
     }
 
+    public function TraerIngresosAlSistemaEntreFechas($fecha1, $fecha2){
+        //consulta
+        if ($fecha2 == null){
+            $sql = "SELECT nombre, fechaEntrada FROM User WHERE DATE(fechaEntrada) = ?";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT nombre, fechaEntrada FROM User WHERE DATE(fechaEntrada) BETWEEN ? AND ?";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        
+        //prepara la consulta
+        
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerOperacionesPorSector($sector){
+        //consulta
+        $sql = "SELECT SUM(cantOperaciones) as suma FROM User WHERE tipo = ?";
+        $stmt = $this->prepararConsulta($sql);
+
+        $stmt->bindParam(1, $sector);
+        
+        //prepara la consulta
+        
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerOperacionesPorSectorListado($sector){
+        //consulta
+        $sql = "SELECT nombre, cantOperaciones FROM User WHERE tipo = ?";
+        $stmt = $this->prepararConsulta($sql);
+        $stmt->bindParam(1, $sector);
+        
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerOperacionesPorUsuario(){
+        //consulta
+        $sql = "SELECT nombre, cantOperaciones FROM User";
+        $stmt = $this->prepararConsulta($sql);
+
+        try {
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     //INSERT
     public function altaUsuario($usuario)
     {

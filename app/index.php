@@ -57,7 +57,7 @@ $app->group('/cliente', function (RouteCollectorProxy $group) {
     $group->post('[/]', \PedidoController::class . ':EncuestaPedido')->add(\ParamMiddlewares::class . ':VerificarInexisistenciaDeEncuesta')->add(\ParamMiddlewares::class . ':AltaEncuesta');
 });
 
-$app->group('/archivos', function (RouteCollectorProxy $group) {
+$app->group('/csv', function (RouteCollectorProxy $group) {
     $group->get('/pedidos', \PedidoController::class . ':DescargarCSV'); 
     $group->get('/ventas', \PedidoController::class . ':DescargarVentasCSV'); 
     $group->get('/encuestas', \PedidoController::class . ':DescargarEncuestaCSV'); 
@@ -71,14 +71,40 @@ $app->group('/archivos', function (RouteCollectorProxy $group) {
     $group->post('/productos', \ProductoController::class . ':CargarCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
     $group->post('/mesas', \MesaController::class . ':CargarCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
     $group->post('/usuarios', \UserController::class . ':CargarCSV')->add(\ParamMiddlewares::class . ':AltaCSV');; 
-});
+})->add(\AuthMiddleware::class . ':verificarSocio')->add(\AuthMiddleware::class . ':verificarToken');
+
+$app->group('/estadisticas', function (RouteCollectorProxy $group) {
+    $group->group('/empleados', function (RouteCollectorProxy $subGroup){
+        $subGroup->get('/ingreso', \UserController::class . ':ObtenerIngresoAlSistema');  
+        $subGroup->get('/operacionesPorSector', \UserController::class . ':ObtenerOperacionesPorSector'); 
+        $subGroup->get('/operacionesPorSectorListado', \UserController::class . ':ObtenerOperacionesPorSectorListado');  
+        $subGroup->get('/operacionPorUsuario', \UserController::class . ':ObtenerOperacionPorUsuario');  
+    });
+    $group->group('/pedidos', function (RouteCollectorProxy $subGroup){
+        $subGroup->get('/masVendido', \PedidoController::class . ':ObtenerMasVendido');  
+        $subGroup->get('/menosVendido', \PedidoController::class . ':ObtenerMenosVendido'); 
+        $subGroup->get('/demorados', \PedidoController::class . ':ObtenerDemorados');
+        $subGroup->get('/cancelados', \PedidoController::class . ':ObtenerCancelados');
+    });
+    $group->group('/mesas', function (RouteCollectorProxy $subGroup){
+        $subGroup->get('/masUsada', \MesaController::class . ':ObtenerMasUsada'); # masomenos
+        $subGroup->get('/menosUsada', \MesaController::class . ':ObtenerMenosUsada'); # masomenos
+        $subGroup->get('/masFacturo', \MesaController::class . ':ObtenerMasFacturo'); # dificil
+        $subGroup->get('/menosFacturo', \MesaController::class . ':ObtenerMenosFacturo'); # dificil
+        $subGroup->get('/mayorImporte', \MesaController::class . ':ObtenerMayorImporte'); #facil
+        $subGroup->get('/menorImporte', \MesaController::class . ':ObtenerMenorImporte'); #facil
+        $subGroup->get('/facturacionEntreFechas', \MesaController::class . ':ObtenerFacturacionEntreFechas'); # dificil
+        $subGroup->get('/mejoresComentarios', \MesaController::class . ':ObtenerMejoresComentarios'); #muy facil
+        $subGroup->get('/peoresComentarios', \MesaController::class . ':ObtenerPeoresComentarios'); #muy facil
+    });
+    
+});//->add(\AuthMiddleware::class . ':verificarSocio')->add(\AuthMiddleware::class . ':verificarToken');
 
 
 $app->run();
 
 // php -S localhost:666 -t app (para prender el servidor)
 
-//CSV
 //PDF -> Descarga las estadisticas
 
 /*

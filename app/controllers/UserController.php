@@ -120,4 +120,51 @@ class UserController
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
+
+    public static function ObtenerIngresoAlSistema($request, $response, $args){
+        $parametros = $request->getQueryParams();
+        
+        $fecha1 = $parametros['fecha1'];
+
+        if (isset($parametros['fecha2'])){
+            $fecha2 = $parametros['fecha2'];
+            $listaUsers = User::ObtenerIngresoAlSistema($fecha1, $fecha2);
+        }else{
+            $listaUsers = User::ObtenerIngresoAlSistema($fecha1);
+        }
+
+        $payload = json_encode(array("listaUsuario" => $listaUsers));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function ObtenerOperacionesPorSector($request, $response, $args){
+        $parametros = $request->getQueryParams();
+
+        $operacionesPorSector = User::ObtenerOperacionesPorSector();
+        
+        $payload = json_encode(array("operaciones por sector" => $operacionesPorSector));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function ObtenerOperacionesPorSectorListado($request, $response, $args){
+        $parametros = $request->getQueryParams();
+
+        $operacionesPorSector = User::ObtenerOperacionesPorSectorListado();
+        
+        $payload = json_encode(array("operaciones por sector listado por usuarios" => $operacionesPorSector));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    public static function ObtenerOperacionPorUsuario($request, $response, $args){
+        $parametros = $request->getQueryParams();
+
+        $operacionesPorSector = User::ObtenerOperacionPorUsuario();
+        
+        $payload = json_encode(array("operaciones por usuarios" => $operacionesPorSector));
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 }

@@ -96,6 +96,54 @@ class VentasPedidosADO extends AccesoDatos
             return false;
         }
     }
+
+    public function TraerMasVendido($fecha1, $fecha2){
+        //consulta
+        if ($fecha2 == null){
+            $sql = "SELECT idProducto, COUNT(*) as cantidad FROM ventas WHERE DATE(horaListaParaServirEstimada) = ? GROUP BY idProducto ORDER BY cantidad DESC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT idProducto, COUNT(*) as cantidad FROM ventas WHERE DATE(horaListaParaServirEstimada) BETWEEN ? AND ? GROUP BY idProducto ORDER BY cantidad DESC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function TraerMenosVendido($fecha1, $fecha2){
+        //consulta
+        if ($fecha2 == null){
+            $sql = "SELECT idProducto, COUNT(*) as cantidad FROM ventas WHERE DATE(horaListaParaServirEstimada) = ? GROUP BY idProducto ORDER BY cantidad ASC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT idProducto, COUNT(*) as cantidad FROM ventas WHERE DATE(horaListaParaServirEstimada) BETWEEN ? AND ? GROUP BY idProducto ORDER BY cantidad ASC LIMIT 1 ";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
     
 
     //INSERT

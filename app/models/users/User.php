@@ -90,5 +90,53 @@ class User {
         return $retorno;
     }
 
+    public static function ObtenerIngresoAlSistema($fecha1, $fecha2 = null){
+        $datos = UsersADO::obtenerInstancia();
+        $data = $datos->TraerIngresosAlSistemaEntreFechas($fecha1, $fecha2);
+        return $data;
+    }
+
+    public static function ObtenerOperacionesPorSector(){
+        $datos = UsersADO::obtenerInstancia();
+        $operacionesSocios = $datos->TraerOperacionesPorSector("socio");
+        $operacionesMozos =  $datos->TraerOperacionesPorSector("mozo");
+        $operacionesCocineros =  $datos->TraerOperacionesPorSector("cocinero");
+        $operacionesBartender =  $datos->TraerOperacionesPorSector("bartender");
+        $operacionesCervezeros =  $datos->TraerOperacionesPorSector("cervezero");
+
+
+        $data = array(
+            "socios"=> $operacionesSocios[0]["suma"],
+            "mozos"=> $operacionesMozos[0]["suma"],
+            "cocineros"=> $operacionesCocineros[0]["suma"],
+            "bartenders"=> $operacionesBartender[0]["suma"],
+            "cervezeros"=> $operacionesCervezeros[0]["suma"],
+        );
+        return $data;
+    }
+
+    public static function ObtenerOperacionesPorSectorListado(){
+        $datos = UsersADO::obtenerInstancia();
+        $operacionesSocios = $datos->TraerOperacionesPorSectorListado("socio");
+        $operacionesMozos =  $datos->TraerOperacionesPorSectorListado("mozo");
+        $operacionesCocineros =  $datos->TraerOperacionesPorSectorListado("cocinero");
+        $operacionesBartender =  $datos->TraerOperacionesPorSectorListado("bartender");
+        $operacionesCervezeros =  $datos->TraerOperacionesPorSectorListado("cervezero");
+
+        $data = array(
+            "socios"=> $operacionesSocios,
+            "mozos"=> $operacionesMozos,
+            "cocineros"=> $operacionesCocineros,
+            "bartenders"=> $operacionesBartender,
+            "cervezeros"=> $operacionesCervezeros,
+        );
+        return $data;
+    }
+
+    public static function ObtenerOperacionPorUsuario(){
+        $datos = UsersADO::obtenerInstancia();
+        $data = $datos->TraerOperacionesPorUsuario();
+        return $data;
+    }
 
 }

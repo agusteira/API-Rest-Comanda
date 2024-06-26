@@ -102,6 +102,18 @@ class Pedido{
         $data = $datos->ObtenerTiempoRestante($codigoPedido);
         return $data;
     }
+
+    public static function ObtenerDemorados($fecha1, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerDemorados($fecha1, $fecha2);
+        return $data;
+    }
+
+    public static function ObtenerCancelados($fecha1, $fecha2 = null){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerCancelados($fecha1, $fecha2);
+        return $data;
+    }
     
     //Modificar
     public static function RelacionarFoto($idPedido, $foto){
@@ -119,6 +131,7 @@ class Pedido{
         }
         return $retorno;
     }
+
     //Otras funciones
     public function calcularImporteFinal($productos){
         $importe = 0;
@@ -218,7 +231,6 @@ class Pedido{
         $filename = "Ventas" . "_". date("d-m-Y").".csv";
         return self::GenerarCSV($filename, $data);
     }
-
     public static function CargarVentasCSV($ArchivoCSV, $filename){
         $ventas = Pedido::ConvertirCSVenArray($ArchivoCSV, $filename);
         $datos = VentasPedidosADO::obtenerInstancia();
@@ -231,6 +243,27 @@ class Pedido{
         return $retorno;
     }
 
+    public static function ObtenerMasVendido($fecha1, $fecha2 = null){
+        $datosVentas = VentasPedidosADO::obtenerInstancia();
+        $datosProductos = ProductosADO::obtenerInstancia();
+
+        $data = $datosVentas->TraerMasVendido($fecha1, $fecha2);
+        $nombreProducto = $datosProductos->ObtenerNombrePorId($data[0]["idProducto"]);
+
+        return $nombreProducto["nombre"];
+    }
+
+    public static function ObtenerMenosVendido($fecha1, $fecha2 = null){
+        $datosVentas = VentasPedidosADO::obtenerInstancia();
+        $datosProductos = ProductosADO::obtenerInstancia();
+
+        $data = $datosVentas->TraerMenosVendido($fecha1, $fecha2);
+        $nombreProducto = $datosProductos->ObtenerNombrePorId($data[0]["idProducto"]);
+
+        return $nombreProducto["nombre"];
+    }
+
+    
 
 
 }

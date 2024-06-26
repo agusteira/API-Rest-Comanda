@@ -69,6 +69,24 @@ class ProductosADO extends AccesoDatos
             return false;
         }
     }
+
+    public function ObtenerNombrePorId($id){
+        //consulta
+        $sql = "SELECT nombre FROM productos WHERE id = :id";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+
+        $stmt->bindParam(':id', $id);
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
     
     //INSERT
     public function altaProducto($producto)
