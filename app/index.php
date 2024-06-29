@@ -23,6 +23,8 @@ $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 
 $app->post('/login', \UserController::class . ':LoginUsuarios');
+$app->get('/pdfEstadisticas', \UserController::class . ':PDF');
+
 
 $app->group('/usuario', function (RouteCollectorProxy $group) {
     $group->get('[/]', \UserController::class . ':ListaUsuarios');
@@ -57,7 +59,7 @@ $app->group('/cliente', function (RouteCollectorProxy $group) {
     $group->post('[/]', \PedidoController::class . ':EncuestaPedido')->add(\ParamMiddlewares::class . ':VerificarInexisistenciaDeEncuesta')->add(\ParamMiddlewares::class . ':AltaEncuesta');
 });
 
-$app->group('/csv', function (RouteCollectorProxy $group) {
+$app->group('/csvTablas', function (RouteCollectorProxy $group) {
     $group->get('/pedidos', \PedidoController::class . ':DescargarCSV'); 
     $group->get('/ventas', \PedidoController::class . ':DescargarVentasCSV'); 
     $group->get('/encuestas', \PedidoController::class . ':DescargarEncuestaCSV'); 
@@ -98,7 +100,7 @@ $app->group('/estadisticas', function (RouteCollectorProxy $group) {
         $subGroup->get('/peoresComentarios', \MesaController::class . ':ObtenerPeoresComentarios');
     });
     
-});//->add(\AuthMiddleware::class . ':verificarSocio')->add(\AuthMiddleware::class . ':verificarToken');
+})->add(\AuthMiddleware::class . ':verificarSocio')->add(\AuthMiddleware::class . ':verificarToken');
 
 
 $app->run();

@@ -112,6 +112,18 @@ class Pedido{
         $data = $datos->TraerCancelados($fecha1, $fecha2);
         return $data;
     }
+
+    public static function ObtenerFacturacionTotal($fecha1, $fecha2){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerFacturacionTotal($fecha1, $fecha2);
+        return $data;
+    }
+
+    public static function ObtenerCantPedidos($fecha1, $fecha2){
+        $datos = PedidosADO::obtenerInstancia();
+        $data = $datos->TraerCantPedidos($fecha1, $fecha2);
+        return $data;
+    }
     
     //Modificar
     public static function RelacionarFoto($idPedido, $foto){
@@ -261,6 +273,12 @@ class Pedido{
         return $nombreProducto["nombre"];
     }
 
+    public static function ObtenerCantVentas($fecha1, $fecha2)
+    {
+        $datos = VentasPedidosADO::obtenerInstancia();
+        $data = $datos->TraerCantVentas($fecha1, $fecha2);
+        return $data;
+    }
     
 
 

@@ -145,6 +145,27 @@ class VentasPedidosADO extends AccesoDatos
         }
     }
     
+    public function TraerCantVentas($fecha1, $fecha2){
+        if ($fecha2 == null){
+            $sql = "SELECT COUNT(*) as cantidad FROM ventas WHERE DATE(horaListaParaServirEstimada) = ?";
+            $stmt = $this->prepararConsulta($sql);
+        }else{
+            $sql = "SELECT COUNT(*) as cantidad FROM ventas WHERE DATE(horaListaParaServirEstimada) BETWEEN ? AND ?";
+            $stmt = $this->prepararConsulta($sql);
+            $stmt->bindParam(2, $fecha2);
+        }
+        $stmt->bindParam(1, $fecha1);
+        //prepara la consulta
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 
     //INSERT
     public function altaVenta($pedido, $producto, $cantidad)

@@ -20,7 +20,6 @@ class User {
         $this->_nombre = $nombre;
         $this->_clave = $clave;
     }
-
     public static function comprobarTipoPorID($id, $tipo){
         $datos = UsersADO::obtenerInstancia();
         $data = $datos->retornarTipoSegunID($id); 
@@ -33,25 +32,21 @@ class User {
         }
         return $retorno;
     }
-
     public static function traerTodosLosUsuarios(){
         $datos = UsersADO::obtenerInstancia();
         $data = $datos->traerTodosLosUsuarios();
         return $data;
     }
-
     public static function TraerTodoEnCSV(){
         $data = self::traerTodosLosUsuarios();
         $filename = "Usuarios" . "_". date("d-m-Y").".csv";
         return Pedido::GenerarCSV($filename, $data);
     }
-
     public function cambiarEstadoPedido($estado, $idPedido){
         $datos = PedidosADO::obtenerInstancia();
         $data = $datos->ModificarEstadoPorID($idPedido, $estado);
         return $data;
     }
-
     public static function obtenerUsuarioMedianteID($id){
         $datos = UsersADO::obtenerInstancia();
         $data = $datos->traerUsuarioPorID($id);
@@ -89,13 +84,11 @@ class User {
         }
         return $retorno;
     }
-
     public static function ObtenerIngresoAlSistema($fecha1, $fecha2 = null){
         $datos = UsersADO::obtenerInstancia();
         $data = $datos->TraerIngresosAlSistemaEntreFechas($fecha1, $fecha2);
         return $data;
     }
-
     public static function ObtenerOperacionesPorSector(){
         $datos = UsersADO::obtenerInstancia();
         $operacionesSocios = $datos->TraerOperacionesPorSector("socio");
@@ -114,7 +107,6 @@ class User {
         );
         return $data;
     }
-
     public static function ObtenerOperacionesPorSectorListado(){
         $datos = UsersADO::obtenerInstancia();
         $operacionesSocios = $datos->TraerOperacionesPorSectorListado("socio");
@@ -132,11 +124,15 @@ class User {
         );
         return $data;
     }
-
     public static function ObtenerOperacionPorUsuario(){
         $datos = UsersADO::obtenerInstancia();
         $data = $datos->TraerOperacionesPorUsuario();
         return $data;
     }
-
+    public static function ObtenerUsuarioMasTrabajador(){
+        $operacionesUsuarios = User::ObtenerOperacionPorUsuario();
+        $indexMaxOperaciones = array_search(max(array_column($operacionesUsuarios, 'cantOperaciones')), array_column($operacionesUsuarios, 'cantOperaciones'));
+        $usuarioConMasOperaciones = $operacionesUsuarios[$indexMaxOperaciones];
+        return $usuarioConMasOperaciones["nombre"];
+    }
 }
