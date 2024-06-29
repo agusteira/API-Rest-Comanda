@@ -76,24 +76,49 @@ class PersonalGastronomico extends User implements IEmpleados{
         $datosVentas = VentasPedidosADO::obtenerInstancia();
         $dataVentas = $datosVentas->ModificarEstado($idPedido, $idProducto, $estado); //ESTADO DEL PRODUCTO
 
-        if ($estado == "listo para servir"){
+        if ($estado == "listo para servir" || $estado == "servido"){
             $productosDelPedido = $datosVentas->ObtenerTodosLosProductosDeUnPedido($idPedido);
             
-            //Si estan TODOS los productos pedido LISTO para servir, el estado del pedido CAMBIA a listo para servir
+            //Si estan TODOS los productos pedido LISTO para servir o SERVIDO, el estado del pedido CAMBIA a ese estado
             $flag = true;
             foreach($productosDelPedido as $producto){
-                if($producto["estado"] != "listo para servir"){
+                if($producto["estado"] != $estado && $producto["estado"] != "servido"){
                     $flag = false;
                     break;
                 }
             }
             if ($flag){
                 $datosPedidos = PedidosADO::obtenerInstancia();
-                $datosPedidos->ModificarEstadoPorID($idPedido, "listo para servir"); //ESTADO DEL PEDIDO
+                $datosPedidos->ModificarEstadoPorID($idPedido, $estado); //ESTADO DEL PEDIDO
             }
         }
 
         return $dataVentas;
+    }
+
+    public static function VerificarTipoDeProductoTomado($idPedido, $idProducto,$dataUsuario){
+        $tipoUsuario = $dataUsuario->tipo;
+
+        $datosVentas = VentasPedidosADO::obtenerInstancia();
+        $tipoProducto = $datosVentas->TraerTipoProducto($idPedido, $idProducto);
+
+        //$tipoProducto[0]["tipoProducto"]
+        if($tipoUsuario == "socio"){
+            $retorno = true;
+        }
+        elseif($tipoUsuario== "bartender" && $tipoProducto[0]["tipoProducto"] == "tragos y vinos"){
+            $retorno = true;
+        }
+        elseif($tipoUsuario== "cocinero" && $tipoProducto[0]["tipoProducto"] == "comidas"){
+            $retorno = true;
+        }
+        elseif($tipoUsuario== "cervezero" && $tipoProducto[0]["tipoProducto"] == "cervezas"){
+            $retorno = true;
+        }
+        else{
+            $retorno = false;
+        }
+        return $retorno;
     }
 
 }

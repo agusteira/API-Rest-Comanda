@@ -167,6 +167,24 @@ class VentasPedidosADO extends AccesoDatos
         }
     }
 
+    public function TraerTipoProducto($idPedido, $idProducto){
+        $sql = "SELECT tipoProducto FROM ventas WHERE idPedido = :idPedido AND idProducto = :idProducto ";
+
+        $stmt = $this->prepararConsulta($sql);
+        $stmt->bindParam(':idPedido', $idPedido);
+        $stmt->bindParam(':idProducto', $idProducto);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     //INSERT
     public function altaVenta($pedido, $producto, $cantidad)
     {

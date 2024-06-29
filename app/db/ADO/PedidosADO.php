@@ -396,12 +396,14 @@ class PedidosADO extends AccesoDatos
 
     //UPDATE
     public function ModificarEstadoPorID($id, $estado){
+        $horaFinal = date("Y-m-d H:i:s");
         //consulta
-        $sql = "UPDATE pedidos SET estado = :estado WHERE id = :id";
+        $sql = "UPDATE pedidos SET estado = :estado, horaFinal = :horaFinal WHERE id = :id";
         //prepara la consulta
         $stmt = $this->prepararConsulta($sql);
 
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
+        $stmt->bindParam(':horaFinal', $horaFinal);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         try {
             //ejecuta la consulta

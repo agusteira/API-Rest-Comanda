@@ -216,6 +216,8 @@ class UserController
 
         // set text shadow effect
         $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
+        
+        // ----------------------------------------------------------------------------------------
         $mesActual = date("Y/m");
 
         $mesaMasUsada = Mesas::ObtenerMesaMasUsada(date("Y-m" . "01"), date("Y-m-d"));
@@ -248,18 +250,14 @@ class UserController
         // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 
-        // ---------------------------------------------------------
+        // -------------------------------------------------------------------------------
 
         // Close and output PDF document
         $filename = "ComanditaResumen_" . date("Y-m") . "pdf";
         $pdf->Output($filename, 'I');
 
-        //$response->getBody()->write($content);
-
-        $response = $response
-            ->withHeader('Content-Type', 'application/pdf')
-            ->withHeader('Content-Disposition', 'attachment; filename="filename.pdf"');
-
-        return $response;
+        return $response
+        ->withHeader('Content-Type', 'application/pdf')
+        ->withHeader('Content-Disposition', 'attachment; filename="filename.pdf"');
     }
 }

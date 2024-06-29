@@ -100,6 +100,23 @@ class ProductoController{
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
+
+    public static function ServirProducto($request, $response, $args){
+        $parametros = $request->getParsedBody();
+
+        $idPedido = $parametros['idPedido'];
+        $idProducto = $parametros['idProducto'];
+
+        if(PersonalGastronomico::ModificarEstado($idPedido, $idProducto, "servido")){
+            $payload = json_encode(array("mensaje" => "Producto SERVIDO"));
+        }
+        else{
+            $payload = json_encode(array("mensaje" => "El producto NO se pudo SERVIR"));
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
     public static function DescargarCSV($request, $response, $args){
         $filePath = Productos::TraerTodoEnCSV(); //Devuelve un csv
         return $response->withHeader('Content-Type', 'application/csv')

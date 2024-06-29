@@ -64,6 +64,18 @@ class ParamMiddlewares
         return $response;
     }
 
+    public static function VerificarTipoDeProductoTomado($request, $handler, $idPedido, $idProducto){
+        $dataUsuario = AutentificadorJWT::ObtenerData($request);
+        if (PersonalGastronomico::VerificarTipoDeProductoTomado($idPedido, $idProducto, $dataUsuario)){
+            $response = $handler->handle($request);
+        }else{
+            $response = new Response();
+            $response->getBody()->write(json_encode(array("error" => "Producto INVALIDO para este usuario")));
+        }
+
+        return $response;
+    }
+
     //Verifcar si existen los parametros
     public static function AltaUsuario(Request $request, RequestHandler $handler){
         $parametros = $request->getParsedBody();
@@ -162,7 +174,7 @@ class ParamMiddlewares
         $parametros = $request->getParsedBody();
 
         if(isset($parametros["idPedido"], $parametros["idProducto"], $parametros["tiempoEstimado"])){
-            $response = $handler->handle($request);
+            $response = self::VerificarTipoDeProductoTomado($request, $handler, $parametros["idPedido"], $parametros["idProducto"]);
         } else {
             $response = new Response();
             $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));
@@ -175,7 +187,7 @@ class ParamMiddlewares
         $parametros = $request->getParsedBody();
 
         if(isset($parametros["idPedido"], $parametros["idProducto"])){
-            $response = $handler->handle($request);
+            $response = self::VerificarTipoDeProductoTomado($request, $handler, $parametros["idPedido"], $parametros["idProducto"]);
         } else {
             $response = new Response();
             $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));

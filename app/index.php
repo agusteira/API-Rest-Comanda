@@ -9,6 +9,7 @@ require_once "controllers/PedidoController.php";
 require_once 'utils/AutentificadorJWT.php';
 require_once 'middlewares/AuthMiddleware.php';
 require_once 'middlewares/ParamMiddlewares.php';
+require_once 'middlewares/LogMiddleware.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -16,11 +17,10 @@ use Slim\Factory\AppFactory;
 use Slim\Routing\RouteCollectorProxy;
 
 
-
-
-
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
+$app->add(\LogMiddleware::class . ':RegistrarMovimiento');
+
 
 $app->post('/login', \UserController::class . ':LoginUsuarios');
 $app->get('/pdfEstadisticas', \UserController::class . ':PDF');
@@ -52,6 +52,7 @@ $app->group('/producto', function (RouteCollectorProxy $group) {
     $group->post('[/]', \ProductoController::class . ':AltaProducto')->add(\ParamMiddlewares::class . ':AltaProducto')->add(\AuthMiddleware::class . ':verificarSocio');
     $group->put('/tomarProducto', \ProductoController::class . ':TomarProducto')->add(\ParamMiddlewares::class . ':TomarProducto');
     $group->put('/terminarProducto', \ProductoController::class . ':TerminarProducto')->add(\ParamMiddlewares::class . ':TerminarProducto');
+    $group->put('/servirProducto', \ProductoController::class . ':ServirProducto')->add(\ParamMiddlewares::class . ':TerminarProducto');
 })->add(\AuthMiddleware::class . ':verificarToken');
 
 $app->group('/cliente', function (RouteCollectorProxy $group) {
