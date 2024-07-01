@@ -8,41 +8,2151 @@
 	},
 	"item": [
 		{
-			"name": "AltaUsuario",
-			"event": [
+			"name": "Cliente",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
+					"name": "VerTiempoRestante",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg2NzY4ODAsImV4cCI6MTcxODczNjg4MCwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.8yxDte6PcHLytfFc77GCULkp96LwGd_aUg0cQSPKpC0"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:666/cliente?codigoPedido=O54V9&codigoMesa=M-OQ7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"cliente"
+							],
+							"query": [
+								{
+									"key": "codigoPedido",
+									"value": "O54V9"
+								},
+								{
+									"key": "codigoMesa",
+									"value": "M-OQ7"
+								}
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "encuesta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkxNzM1NDEsImV4cCI6MTcxOTIzMzU0MSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.7Wm9ILwy-cRpQ_DhUFb1DPICoCUzdiT71xX_H24UclM"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigoMesa",
+									"value": "M-M8I",
+									"type": "text"
+								},
+								{
+									"key": "codigoPedido",
+									"value": "78OLw",
+									"type": "text"
+								},
+								{
+									"key": "calMesa",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "calRestaurante",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "calMozo",
+									"value": "9",
+									"type": "text"
+								},
+								{
+									"key": "calCocinero",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "comentarios",
+									"value": "muy raro todo",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/cliente",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
 				}
-			],
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "ListarUsuarios",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk2ODAzNDksImV4cCI6MTcxOTc0MDM0OSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.BKBMAVnjO1fO7CI3DpE5FkUxt6ONBCqJGIf60H9tf2I"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "IDusuario",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "tipo",
+									"value": "mozo",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuario",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "AltaUsuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk2ODAzNDksImV4cCI6MTcxOTc0MDM0OSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.BKBMAVnjO1fO7CI3DpE5FkUxt6ONBCqJGIf60H9tf2I"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tipo",
+									"value": "bartender",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "daniela",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "soybartender",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/usuario",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "SuspenderUsuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg0NzU2MDcsImV4cCI6MTcxODUzNTYwNywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.j2fe2SSVjjvFo2pM2X7BmzB_lk8SxktcVR53Kn7TJWI"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"url": "http://localhost:666/usuario/5",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "BorrarUsuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg0NzU2MDcsImV4cCI6MTcxODUzNTYwNywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.j2fe2SSVjjvFo2pM2X7BmzB_lk8SxktcVR53Kn7TJWI"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:666/usuario/5",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "AltaPedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk4NjY1OTksImV4cCI6MTcxOTkyNjU5OSwiZGF0YSI6eyJpZCI6MiwidGlwbyI6Im1vem8iLCJub21icmUiOiJmYWJyaXppbyJ9LCJmaXJtYSI6IkFndXN0aW4gVGVpcmEifQ.gb08Vot8uLkiIwGRjs6_65qWKGx4OH8YZxuusYc1EIE"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombreCliente",
+									"value": "pruebaFinal",
+									"type": "text"
+								},
+								{
+									"key": "IDmesa",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "productos",
+									"value": "[{\"nombre\":\"milanesa a caballo\", \"cantidad\": 1}, {\"nombre\":\"hamburguesa de garbanzo\", \"cantidad\": 2}, {\"nombre\":\"corona\", \"cantidad\": 1}, {\"nombre\":\"daikiri\", \"cantidad\": 1}]\n ",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/pedido",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "ListaPedidos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk4NjgyMTIsImV4cCI6MTcxOTkyODIxMiwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.rZzwdvuxcLhPEWVCc453dlqVLXifljEq4aXSiKKD2OI"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/pedido",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "RelacionarFoto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk4NjY1OTksImV4cCI6MTcxOTkyNjU5OSwiZGF0YSI6eyJpZCI6MiwidGlwbyI6Im1vem8iLCJub21icmUiOiJmYWJyaXppbyJ9LCJmaXJtYSI6IkFndXN0aW4gVGVpcmEifQ.gb08Vot8uLkiIwGRjs6_65qWKGx4OH8YZxuusYc1EIE"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "postman-cloud:///1ef2d05e-627d-4030-b0af-c84c2028451c"
+								},
+								{
+									"key": "idPedido",
+									"value": "46",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/pedido/RelacionarFoto"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mesas",
+			"item": [
+				{
+					"name": "AltaMesa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg2NzY4ODAsImV4cCI6MTcxODczNjg4MCwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.8yxDte6PcHLytfFc77GCULkp96LwGd_aUg0cQSPKpC0"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/mesa",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "cerraMesa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "IDmesa",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/mesa/cerrar",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "cobrarMesa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "IDmesa",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "con cliente pagando",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/mesa/actualizarEstado",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "ListaMesas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/mesa",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "ListaProductos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg0NzU2MDcsImV4cCI6MTcxODUzNTYwNywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.j2fe2SSVjjvFo2pM2X7BmzB_lk8SxktcVR53Kn7TJWI"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "IDusuario",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "tipo",
+									"value": "mozo",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/producto",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "VerProductosPendientes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk4NjY5NTYsImV4cCI6MTcxOTkyNjk1NiwiZGF0YSI6eyJpZCI6MywidGlwbyI6ImNvY2luZXJvIiwibm9tYnJlIjoiYWd1c3RpbiJ9LCJmaXJtYSI6IkFndXN0aW4gVGVpcmEifQ.vs5SL59k8SEr92T5laYSHLxIlySqQu9qlXYdHRSKFkc"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/producto/verProductosPendientes",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "AltaProducto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTg0NzU2MDcsImV4cCI6MTcxODUzNTYwNywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.j2fe2SSVjjvFo2pM2X7BmzB_lk8SxktcVR53Kn7TJWI"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tipoProducto",
+									"value": "tragos y vinos",
+									"type": "text"
+								},
+								{
+									"key": "importeProducto",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "tiempoEstimado",
+									"value": "00:04:30",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "daikiri",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:666/producto",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "tomarProducto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk4Njc0NzUsImV4cCI6MTcxOTkyNzQ3NSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.VcQS6v8BZqr45IiQ7IcVVmXIVuXRPbFANallcVbtPko"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idPedido",
+									"value": "46",
+									"type": "text"
+								},
+								{
+									"key": "idProducto",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "tiempoEstimado",
+									"value": "00:43:00",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "http://localhost:666/producto/tomarProducto",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "terminarProducto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk4NjgyMTIsImV4cCI6MTcxOTkyODIxMiwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.rZzwdvuxcLhPEWVCc453dlqVLXifljEq4aXSiKKD2OI"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idPedido",
+									"value": "46",
+									"type": "text"
+								},
+								{
+									"key": "idProducto",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "http://localhost:666/producto/terminarProducto",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "servirProducto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk4Njc0NzUsImV4cCI6MTcxOTkyNzQ3NSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.VcQS6v8BZqr45IiQ7IcVVmXIVuXRPbFANallcVbtPko"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "idPedido",
+									"value": "46",
+									"type": "text"
+								},
+								{
+									"key": "idProducto",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "http://localhost:666/producto/servirProducto",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Archivos",
+			"item": [
+				{
+					"name": "DescargarArchivo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk2ODAzNDksImV4cCI6MTcxOTc0MDM0OSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.BKBMAVnjO1fO7CI3DpE5FkUxt6ONBCqJGIf60H9tf2I"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/csvTablas/mesas",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "DescargarPDF",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk2ODAzNDksImV4cCI6MTcxOTc0MDM0OSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.BKBMAVnjO1fO7CI3DpE5FkUxt6ONBCqJGIf60H9tf2I"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "http://localhost:666/pdfEstadisticas",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "CargarArchivo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/F:/Xampp/htdocs/Progra_III_PhP/TP/app/csv/descargados/Usuarios_25-06-2024.csv"
+								}
+							]
+						},
+						"url": "http://localhost:666/archivos/usuarios",
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estadisticas",
+			"item": [
+				{
+					"name": "empleados",
+					"item": [
+						{
+							"name": "ObtenerIngresoAlSistema",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk2OTc1NDAsImV4cCI6MTcxOTc1NzU0MCwiZGF0YSI6eyJpZCI6NCwidGlwbyI6ImJhcnRlbmRlciIsIm5vbWJyZSI6InpvZSJ9LCJmaXJtYSI6IkFndXN0aW4gVGVpcmEifQ.p9CLj-RjZySR8YkIwf5z0SGs6tLC_xXVVTtrGhzwxFY"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/empleados/ingreso?fecha1=2024-06-25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"empleados",
+										"ingreso"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-25"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "OperacionesPorSector",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk2ODAzNDksImV4cCI6MTcxOTc0MDM0OSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.BKBMAVnjO1fO7CI3DpE5FkUxt6ONBCqJGIf60H9tf2I"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:666/estadisticas/empleados/operacionesPorSector",
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "OperacionesPorSectorListado",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:666/estadisticas/empleados/operacionesPorSectorListado",
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "OperacionesPorUsuario",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk2ODAzNDksImV4cCI6MTcxOTc0MDM0OSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.BKBMAVnjO1fO7CI3DpE5FkUxt6ONBCqJGIf60H9tf2I"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:666/estadisticas/empleados/operacionPorUsuario",
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "pedidos",
+					"item": [
+						{
+							"name": "ObtenerMasVendido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/pedidos/masVendido?fecha1=2024-06-23&fecha2=2024-06-24",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"pedidos",
+										"masVendido"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-23"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-06-24"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerMenosVendido",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/pedidos/menosVendido?fecha1=2024-06-23&fecha2=2024-06-24",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"pedidos",
+										"menosVendido"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-23"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-06-24"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerDemorados",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/pedidos/demorados?fecha1=2024-06-22&fecha2=2024-06-28",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"pedidos",
+										"demorados"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-22"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-06-28"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerCancelados",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/pedidos/cancelados?fecha1=2024-06-23&fecha2=2024-06-24",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"pedidos",
+										"cancelados"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-23"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-06-24"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Mesas",
+					"item": [
+						{
+							"name": "ObtenerMayorImporte",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTk2ODAzNDksImV4cCI6MTcxOTc0MDM0OSwiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.BKBMAVnjO1fO7CI3DpE5FkUxt6ONBCqJGIf60H9tf2I"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/mesas/mayorImporte?fecha1=2024-06-22&fecha2=2024-06-25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"mesas",
+										"mayorImporte"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-22"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-06-25"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerFacturacion",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/mesas/facturacionEntreFechas/2?fecha1=2024-05-06&fecha2=2024-08-06",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"mesas",
+										"facturacionEntreFechas",
+										"2"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-05-06"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-08-06"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerMesaMasUsada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/mesas/masUsada?fecha1=2024-06-22&fecha2=2024-08-06",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"mesas",
+										"masUsada"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-22"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-08-06"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerMesaMenosUsada",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/mesas/menosUsada?fecha1=2024-06-22&fecha2=2024-08-06",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"mesas",
+										"menosUsada"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-22"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-08-06"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerMesaMayorFacturacion",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/mesas/masFacturo?fecha1=2024-06-22&fecha2=2024-08-06",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"mesas",
+										"masFacturo"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-22"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-08-06"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerMesaMayorFacturacion Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/mesas/menosFacturo?fecha1=2024-06-22&fecha2=2024-08-06",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"mesas",
+										"menosFacturo"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-22"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-08-06"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerMenorImporte",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:666/estadisticas/mesas/menorImporte?fecha1=2024-06-22&fecha2=2024-06-25",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "666",
+									"path": [
+										"estadisticas",
+										"mesas",
+										"menorImporte"
+									],
+									"query": [
+										{
+											"key": "fecha1",
+											"value": "2024-06-22"
+										},
+										{
+											"key": "fecha2",
+											"value": "2024-06-25"
+										}
+									]
+								},
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerMejoresComentarios",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:666/estadisticas/mesas/mejoresComentarios",
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						},
+						{
+							"name": "ObtenerPeoresComentarios",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "IDusuario",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tipo",
+											"value": "mozo",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:666/estadisticas/mesas/peoresComentarios",
+								"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "login",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTkwODQwODMsImV4cCI6MTcxOTE0NDA4MywiZGF0YSI6eyJpZCI6MSwidGlwbyI6InNvY2lvIiwibm9tYnJlIjoiYWRtaW4ifSwiZmlybWEiOiJBZ3VzdGluIFRlaXJhIn0.Stlf2_czY-YXuc8h4dikd8zbGksAGd4iFE7hpb0FjEA"
+					}
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "IDusuario",
-							"value": "1",
+							"key": "nombre",
+							"value": "admin",
 							"type": "text"
 						},
 						{
-							"key": "tipo",
-							"value": "mozo",
+							"key": "clave",
+							"value": "admin",
 							"type": "text"
 						}
 					]
 				},
-				"url": "http://localhost:666/altaUsuario",
-				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+				"url": {
+					"raw": "http://localhost:666/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
 			},
 			"response": []
 		}
