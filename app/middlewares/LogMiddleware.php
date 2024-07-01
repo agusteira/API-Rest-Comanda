@@ -26,9 +26,6 @@ class LogMiddleware
 
             $dataLog = LogADO::obtenerInstancia();
             $dataLog->altaLog($idUsuario, $path, $hora);
-            echo "ch";
-        }catch(Exception $e){
-            var_dump($e);
         }
         finally{
             $response = $handler->handle($request);

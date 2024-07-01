@@ -65,7 +65,6 @@ class MesasADO extends AccesoDatos
 
         // Ejecutar la consulta
         try {
-            //echo "hola";
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
@@ -98,7 +97,6 @@ class MesasADO extends AccesoDatos
     //UPDATE
     public function cambiarEstadoMesa($idMesa, $estado, $idPedido = null){
         if ($estado != "cerrada" && $idPedido == null){
-            echo "hola";
             $mesaDelPedido = self::traerUnaMesa($idMesa);
             $idPedido = $mesaDelPedido[0]["idPedidoActual"]; //al devolverme la mesa, me devuelve un array adentro de un array, y ahi estan los datos
         }
@@ -111,6 +109,28 @@ class MesasADO extends AccesoDatos
         $stmt->bindParam(':idPedidoActual', $idPedido, PDO::PARAM_STR);
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
         $stmt->bindParam(':idMesa', $idMesa, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene las filas afectadas
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function cambiarEstadoMesaPorIDPedido($idPedido, $estado){
+
+        $sql = "UPDATE mesas SET estado = :estado WHERE idPedidoActual = :idPedido";
+        $stmt = $this->prepararConsulta($sql);
+        
+        $stmt->bindParam(':estado', $estado);
+        $stmt->bindParam(':idPedido', $idPedido);
 
         try {
             //ejecuta la consulta

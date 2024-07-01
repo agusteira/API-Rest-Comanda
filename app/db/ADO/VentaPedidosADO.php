@@ -90,7 +90,6 @@ class VentasPedidosADO extends AccesoDatos
             $stmt->execute();
             //obtiene los datos de la consulta
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            var_dump($result);
             return $result;
         } catch (PDOException $e) {
             return false;
@@ -280,7 +279,6 @@ class VentasPedidosADO extends AccesoDatos
         $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_INT);
         $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
 
-        var_dump(($estado));
 
         try {
             //ejecuta la consulta

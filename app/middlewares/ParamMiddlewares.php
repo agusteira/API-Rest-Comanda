@@ -53,8 +53,9 @@ class ParamMiddlewares
         return $response;
     }
 
-    public static function VerificarInexisistenciaDeEncuesta(Request $request, RequestHandler $handler, $codigoPedido){
-        if (Pedido::TraerEncuestaPorCodigo($codigoPedido) == false)
+    public static function VerificarInexisistenciaDeEncuesta(Request $request, RequestHandler $handler){
+        $parametros = $request->getParsedBody();
+        if (Pedido::TraerEncuestaPorCodigo($parametros["codigoPedido"]) == false)
         {
             $response = $handler->handle($request);
         }else{
@@ -135,7 +136,7 @@ class ParamMiddlewares
         $uploadedFiles = $request->getUploadedFiles();
 
         if(isset($uploadedFiles["foto"], $parametros["idPedido"])){
-            $response = self::VerificarExistenciaDePedidoPorID($request, $handler, $parametros["codigoPedido"]);
+            $response = self::VerificarExistenciaDePedidoPorID($request, $handler, $parametros["idPedido"]);
         } else {
             $response = new Response();
             $response->getBody()->write(json_encode(array("error" => "Parametros incorrectos")));

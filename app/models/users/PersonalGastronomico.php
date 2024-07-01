@@ -81,15 +81,25 @@ class PersonalGastronomico extends User implements IEmpleados{
             
             //Si estan TODOS los productos pedido LISTO para servir o SERVIDO, el estado del pedido CAMBIA a ese estado
             $flag = true;
+            $flagMesa = true;
             foreach($productosDelPedido as $producto){
                 if($producto["estado"] != $estado && $producto["estado"] != "servido"){
                     $flag = false;
+                    break;
+                }
+
+                if($producto["estado"] != "servido"){
+                    $flagMesa = false;
                     break;
                 }
             }
             if ($flag){
                 $datosPedidos = PedidosADO::obtenerInstancia();
                 $datosPedidos->ModificarEstadoPorID($idPedido, $estado); //ESTADO DEL PEDIDO
+            }
+            if ($flagMesa){
+                $datosPedidos = MesasADO::obtenerInstancia();
+                $datosPedidos->cambiarEstadoMesaPorIDPedido($idPedido, "con cliente comiendo"); //ESTADO DE LA MESA
             }
         }
 
@@ -102,7 +112,10 @@ class PersonalGastronomico extends User implements IEmpleados{
         $datosVentas = VentasPedidosADO::obtenerInstancia();
         $tipoProducto = $datosVentas->TraerTipoProducto($idPedido, $idProducto);
 
-        //$tipoProducto[0]["tipoProducto"]
+        if($tipoProducto == null){
+            return false;
+        }
+
         if($tipoUsuario == "socio"){
             $retorno = true;
         }

@@ -23,7 +23,7 @@ $app->add(\LogMiddleware::class . ':RegistrarMovimiento');
 
 
 $app->post('/login', \UserController::class . ':LoginUsuarios');
-$app->get('/pdfEstadisticas', \UserController::class . ':PDF');
+$app->get('/pdfEstadisticas', \UserController::class . ':PDF')->add(\AuthMiddleware::class . ':verificarSocio');
 
 
 $app->group('/usuario', function (RouteCollectorProxy $group) {
@@ -107,9 +107,6 @@ $app->group('/estadisticas', function (RouteCollectorProxy $group) {
 $app->run();
 
 // php -S localhost:666 -t app (para prender el servidor)
-
-//PDF -> Descarga las estadisticas
-
 /*
 [{"nombre":"milanesa a caballo", "cantidad": 1}, {"nombre":"hamburguesa de garbanzo", "cantidad": 2}, {"nombre":"corona", "cantidad": 1}, {"nombre":"daikiri", "cantidad": 1}]
  */

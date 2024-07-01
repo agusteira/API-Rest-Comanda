@@ -69,6 +69,7 @@ class PedidosADO extends AccesoDatos
         }
     }
     public function ObtenerTiempoRestante($codigo){
+        $this->ActualizarHoraFinalPorCodigo($codigo);
         $pedido = $this->TraerUnoPorCodigo($codigo);
         $tiempoDeEsperaEstimado = $pedido["tiempoDeEsperaEstimado"];
         $estado = $pedido["estado"];
@@ -472,6 +473,29 @@ class PedidosADO extends AccesoDatos
         $stmt = $this->prepararConsulta($sql);
         $stmt->bindParam(':CURRENT_DATETIME', $CURRENT_DATETIME);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        try {
+            //ejecuta la consulta
+            $stmt->execute();
+            //obtiene los datos de la consulta
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function ActualizarHoraFinalPorCodigo($codigo){
+        $CURRENT_DATETIME = date("Y-m-d H:i:s");
+        //consulta
+        $sql = "UPDATE pedidos SET horaFinal = :CURRENT_DATETIME WHERE codigo = :codigo";
+        //prepara la consulta
+        $stmt = $this->prepararConsulta($sql);
+        $stmt->bindParam(':CURRENT_DATETIME', $CURRENT_DATETIME);
+        $stmt->bindParam(':codigo', $codigo);
 
         try {
             //ejecuta la consulta

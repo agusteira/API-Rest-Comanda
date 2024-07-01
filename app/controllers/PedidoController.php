@@ -88,7 +88,7 @@ class PedidoController{
         $comentarios = $parametros['comentarios'];
         
         if(Pedido::Encuesta($codigoMesa, $codigoPedido, $calMesa, $calRestaurante, $calMozo, $calCocinero, $comentarios) != false){
-            //$tiempoRestante = Pedido::ObtenerTiempoRestante($codigoMesa, $codigoPedido);
+
             $payload = json_encode(array("mensaje" => "Opinion emitida correctamente"));
         }else{
             $payload = json_encode(array("mensaje" => "NO se pudo emitir la opinion"));

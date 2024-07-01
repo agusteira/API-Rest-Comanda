@@ -23,7 +23,7 @@ class AutentificadorJWT
     public static function VerificarToken($token)
     {
         if (empty($token)) {
-            throw new Exception("El token esta vacio.");
+            echo ("El token esta vacio.");
         }
         try {
             JWT::decode(
@@ -32,7 +32,7 @@ class AutentificadorJWT
                 self::$tipoEncriptacion
             );
         } catch (Exception $e) {
-            throw $e;
+            echo "error al decodificar token";
         }
         /*
         if ($decodificado->aud !== self::Aud()) {
