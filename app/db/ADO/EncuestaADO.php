@@ -54,7 +54,7 @@ class EncuestaADO extends AccesoDatos
 
     public function TraerMejoresComentariosMesa(){
         //consulta
-        $sql = "SELECT codigoPedido, comentarios, mesa FROM encuesta WHERE (SELECT MAX(mesa) FROM encuesta)";
+        $sql = "SELECT codigoPedido, comentarios, mesa FROM encuesta WHERE mesa = (SELECT MAX(mesa) FROM encuesta)";
         $stmt = $this->prepararConsulta($sql);
 
         //prepara la consulta
